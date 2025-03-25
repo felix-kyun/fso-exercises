@@ -1,7 +1,8 @@
 export function Stats({ text, value }) {
   return (
-    <div>
-      <span>{text}: {value}</span>
-    </div>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
   );
 }
