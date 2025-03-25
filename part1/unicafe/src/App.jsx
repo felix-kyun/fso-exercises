@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "./Button";
 import { Statistics } from "./Statistics";
+import { Anecdotes } from "./Anecdotes";
 
 function App() {
   const [good, setGood] = useState(0);
@@ -9,6 +10,7 @@ function App() {
 
   return (
     <>
+      <Anecdotes />
       <div>
         <h1>Give Feedback</h1>
         <Button text="Good" onClick={() => setGood(good + 1)} />
