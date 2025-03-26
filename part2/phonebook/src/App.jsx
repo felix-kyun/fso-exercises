@@ -10,6 +10,10 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (persons.some((person) => person.name === newName)) 
+      return alert(`${newName} is already added to phonebook`);
+
     setPersons([...persons, { name: newName }]);
     setNewName("");
   }
