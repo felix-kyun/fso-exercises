@@ -16,3 +16,8 @@ export const updatePerson = async (person) => {
   return raw.data;
 }
 
+export const deletePerson = async (id) => {
+  const raw = await axios.delete(`${server_url}/${id}`);
+  console.log(raw.data);
+  return raw.data;
+}

@@ -15,7 +15,7 @@ function App() {
     <>
       <h1>PhoneBook</h1>
       <CreationForm persons={persons} setPersons={setPersons} />
-      <PersonRenderer persons={persons} />
+      <PersonRenderer persons={persons} setPersons={setPersons} />
     </>
   );
 }

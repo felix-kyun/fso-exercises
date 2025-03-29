@@ -1,0 +1,11 @@
+.deletePersonButton {
+  border: none;
+  border-radius: 5px;
+  color: lightcoral;
+  transition: background-color 0.3s, color 0.3s;
+  
+  &:hover {
+    background-color: lightcoral;
+    color: white;
+  }
+}
