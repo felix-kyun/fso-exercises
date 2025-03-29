@@ -2,16 +2,13 @@ import { useState } from "react";
 import { CreationForm } from "./CreationForm";
 import { PersonRenderer } from "./PersonsRenderer";
 import { useEffect } from "react";
-import axios from "axios";
+import { getAllPersons } from "./misc/server.mjs";
 
 function App() {
   const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/persons")
-      // .then((res) => res.json()) // only for fetch
-      .then(raw => raw.data)
-      .then((data) => setPersons(data));
+    getAllPersons().then((p) => setPersons(p));
   }, []);
 
   return (
