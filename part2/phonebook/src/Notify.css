@@ -1,0 +1,22 @@
+.notification {
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+}
+
+.notify-info {
+  border-color: lightblue;
+  color: lightblue;
+}
+
+.notify-success {
+  border-color: lightgreen;
+  color: lightgreen;
+}
+
+.notify-error {
+  border-color: lightcoral;
+  color: lightcoral;
+}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FormInput } from "./FormInput";
 import { PersonTableView } from "./PersonTableView";
 
-export function PersonRenderer({ persons, setPersons }) {
+export function PersonRenderer({ persons, setPersons, setMessage }) {
   const [search, setSearch] = useState("");
 
   // make the final list of person
@@ -24,7 +24,7 @@ export function PersonRenderer({ persons, setPersons }) {
         onChange={changeSearch}
         className="search"
       />
-      <PersonTableView persons={finalPersons} setPersons={setPersons} />
+      <PersonTableView persons={finalPersons} setPersons={setPersons} setMessage={setMessage} />
     </div>
   );
 }

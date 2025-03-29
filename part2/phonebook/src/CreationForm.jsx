@@ -1,8 +1,8 @@
 import { FormInput } from "./FormInput";
 import { useState } from "react";
-import { addPerson } from "./misc/server.mjs";
+import { addPerson, updatePerson } from "./misc/server.mjs";
 
-export function CreationForm({ persons, setPersons }) {
+export function CreationForm({ persons, setPersons, setMessage }) {
   const [newName, setName] = useState("");
   const [newPhone, setPhone] = useState("");
 
@@ -16,12 +16,19 @@ export function CreationForm({ persons, setPersons }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (persons.some((person) => person.name === newName))
-      return alert(`${newName} is already added to phonebook`);
-
-    addPerson({ name: newName, phone: newPhone }).then((p) =>
-      setPersons([...persons, p]),
-    );
+    // check if person exsists
+    let person = persons.find((person) => person.name === newName);
+    if (person) {
+      updatePerson({ ...person, phone: newPhone }).then((p) => {
+        setPersons(persons.map((person) => (person.id === p.id ? p : person)));
+        setMessage({ level: "success", data: `Updated ${p.name}` });
+      });
+    } else {
+      addPerson({ name: newName, phone: newPhone }).then((p) => {
+        setPersons([...persons, p]);
+        setMessage({ level: "success", data: `Added ${p.name}` });
+      });
+    }
     setName("");
     setPhone("");
   }
