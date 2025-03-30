@@ -36,4 +36,16 @@ ${new Date().toString()}`,
   );
 });
 
+app.get("/api/persons/:id", async (req, res) => {
+  const { id } = req.params;
+  const person = dummyData.find(({ id: pid }) => pid === id);
+
+  if (!id || !person) {
+    res.statusMessage = "Person doesn't exsist";
+    return res.status(404).send();
+  }
+
+  return res.status(200).json(person);
+});
+
 app.listen(port, () => console.log(`Server started on :${port}`));
