@@ -29,4 +29,11 @@ app.get("/api/persons", async (req, res) => {
   res.status(200).json(dummyData);
 });
 
+app.get("/api/info", async (req, res) => {
+  res.status(200).send(
+    `Phonebook has info for ${dummyData.length} people
+${new Date().toString()}`,
+  );
+});
+
 app.listen(port, () => console.log(`Server started on :${port}`));
