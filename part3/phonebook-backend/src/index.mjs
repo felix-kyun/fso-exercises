@@ -2,6 +2,8 @@ import express from "express";
 
 const port = 3000;
 const app = express();
+app.use(express.json());
+
 let dummyData = [
   {
     id: "1",
@@ -60,6 +62,33 @@ app.delete("/api/persons/:id", async (req, res) => {
 
   dummyData = newData;
   return res.status(204).send();
+});
+
+function generateRandomId() {
+  return Math.floor(Math.random() * 1000000);
+}
+
+function checkDuplicateId(persons, newId) {
+  return persons.some((p) => Number(p.id) === newId);
+}
+
+app.post("/api/persons", async (req, res) => {
+  let newId = generateRandomId();
+
+  while (checkDuplicateId(dummyData, newId)) {
+    newId = generateRandomId();
+  }
+
+  const { name, number } = req.body;
+
+  if (!name || !number) {
+    return res.status(400).send();
+  }
+
+  const newPerson = { id: newId, name, number };
+
+  dummyData.push(newPerson);
+  res.status(201).send(newPerson);
 });
 
 app.listen(port, () => console.log(`Server started on :${port}`));

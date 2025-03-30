@@ -12,8 +12,15 @@ GET http://localhost:3000/api/persons/99999
 
 ### delete a valid person
 DELETE http://localhost:3000/api/persons/2
-DELETE http://localhost:3000/api/persons/3
-DELETE http://localhost:3000/api/persons/4
 
 ### delete a invalid person
 DELETE http://localhost:3000/api/persons/99999
+
+### create new user on the server 
+POST http://localhost:3000/api/persons/
+Content-Type: application/json
+
+{
+  "name": "felix",
+  "number": "13465345",
+}
