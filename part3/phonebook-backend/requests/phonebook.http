@@ -6,3 +6,14 @@ GET http://localhost:3000/api/info
 
 ### get info about a person using their id
 GET http://localhost:3000/api/persons/2
+
+### same but with invalid id
+GET http://localhost:3000/api/persons/99999
+
+### delete a valid person
+DELETE http://localhost:3000/api/persons/2
+DELETE http://localhost:3000/api/persons/3
+DELETE http://localhost:3000/api/persons/4
+
+### delete a invalid person
+DELETE http://localhost:3000/api/persons/99999

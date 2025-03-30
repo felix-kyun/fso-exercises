@@ -2,7 +2,7 @@ import express from "express";
 
 const port = 3000;
 const app = express();
-const dummyData = [
+let dummyData = [
   {
     id: "1",
     name: "Arto Hellas",
@@ -46,6 +46,20 @@ app.get("/api/persons/:id", async (req, res) => {
   }
 
   return res.status(200).json(person);
+});
+
+app.delete("/api/persons/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const newData = dummyData.filter((p) => p.id !== id);
+
+  if (newData.length === dummyData.length) {
+    // res.statusMessage = "Person doesn't exsist";
+    return res.status(404).send();
+  }
+
+  dummyData = newData;
+  return res.status(204).send();
 });
 
 app.listen(port, () => console.log(`Server started on :${port}`));
