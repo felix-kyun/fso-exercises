@@ -1,5 +1,5 @@
 import axios from "axios";
-const server_url = "http://localhost:3000/persons";
+const server_url = "/api/persons";
 
 export const getAllPersons = async () => {
   const raw = await axios.get(server_url);
