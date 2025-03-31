@@ -46,3 +46,6 @@ Content-Type: application/json
   "name": "felix",
   "number": "13465345"
 }
+
+### check invalid url
+{{server_url}}/smthWhichDoesntExist HTTP/1.1
