@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
+import { validatePersonName } from "../misc/personModelValidator.mjs";
 
 const personSchema = new mongoose.Schema({
   name: String,
   number: {
     type: String,
     validate: {
-      validator: (v) => /\d{8,}/.test(v),
+      validator: validatePersonName,
       message: ({value}) => `${value} is not a valid phone number!`,
     }
   },
