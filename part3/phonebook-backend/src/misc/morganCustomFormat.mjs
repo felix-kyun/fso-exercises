@@ -1,6 +1,7 @@
 export function morganCustomFormat(tokens, req, res) {
-  const responseBody =
-    tokens.method(req, res) === "POST" ? JSON.stringify(req.body) : "";
+  const responseBody = ["POST", "PUT"].includes(tokens.method(req, res))
+    ? JSON.stringify(req.body)
+    : "";
 
   return [
     tokens.method(req, res),

@@ -1,61 +1,62 @@
-import { generateRandomId } from "../misc/generateRandomId.mjs";
-import { checkDuplicateId } from "../misc/checkDuplicateId.mjs";
 import { checkDuplicateName } from "../misc/checkDuplicateName.mjs";
 import { db } from "../../db.mjs";
+import { Person } from "../models/person.model.mjs";
+import { ServerError } from "../middlewares/errorHandler.middleware.mjs";
+import { StatusCodes } from "http-status-codes";
 
 export async function getAllPerson(req, res) {
-  res.status(200).json(db.persons);
+  const persons = await Person.find({});
+  res.status(200).json(persons);
 }
 
 export async function getPerson(req, res) {
   const { id } = req.params;
-  const person = db.persons.find(({ id: pid }) => pid === id);
+  const person = await Person.findById(id);
 
   if (!id || !person) {
-    res.statusMessage = "Person doesn't exsist";
-    return res.status(404).send();
+    throw new ServerError(404, "Person doesn't exsist");
   }
 
-  return res.status(200).json(person);
+  return res.status(StatusCodes.OK).json(person);
 }
 
 export async function deletePerson(req, res) {
   const { id } = req.params;
 
-  const newData = db.persons.filter((p) => p.id !== id);
+  const deletedPerson = await Person.findByIdAndDelete(id);
 
-  if (newData.length === db.persons.length) {
-    // res.statusMessage = "Person doesn't exsist";
-    return res.status(404).send();
+  if (!deletedPerson) {
+    throw new ServerError(StatusCodes.NOT_FOUND, "Person doesn't exsist");
   }
 
-  db.persons = newData;
-  return res.status(204).send();
+  return res.status(StatusCodes.NO_CONTENT).send();
 }
 
 export async function createPerson(req, res) {
   const { name, number } = req.body;
 
   if (!name || !number) {
-    return res.status(400).json({
-      error: "name or number is invalid",
-    });
+    throw new ServerError(StatusCodes.BAD_REQUEST, "name or number is invalid");
   }
 
-  if (checkDuplicateName(name)) {
-    return res.status(409).json({
-      error: "Person with the name already exsists",
-    });
+  const newPerson = await Person.create({ name, number });
+
+  return res.status(StatusCodes.CREATED).send(newPerson);
+}
+
+export async function updatePerson(req, res) {
+  const { id } = req.params;
+  const { name, number } = req.body;
+
+  if (!name || !number) {
+    throw new ServerError(StatusCodes.BAD_REQUEST, "name or number is invalid");
   }
 
-  let newId = generateRandomId();
+  const person = await Person.findById(id);
+  person.name = name ?? person.name;
+  person.number = number ?? person.number;
 
-  while (checkDuplicateId(newId)) {
-    newId = generateRandomId();
-  }
+  await person.save();
 
-  const newPerson = { id: newId, name, number };
-  db.persons.push(newPerson);
-
-  return res.status(201).send(newPerson);
+  return res.status(StatusCodes.OK).send(person);
 }

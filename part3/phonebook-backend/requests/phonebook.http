@@ -3,49 +3,49 @@
 @server_url = http://{{host}}:{{port}}/api
 
 
-### get all persons
+###
 
+# @name get all persons
 GET {{server_url}}/persons HTTP/1.1
 
-### get server stats
+###
 
+# @name get server stats
 GET {{server_url}}/info HTTP/1.1
 
-### get info about a person using their id
+###
 
-GET {{server_url}}/persons/2 HTTP/1.1
+# @name get person by id
+GET {{server_url}}/persons/67eb0d62dd8d5c169e245e0a HTTP/1.1
 
-### same but with invalid id
+###
 
-GET {{server_url}}/persons/99999 HTTP/1.1
+# @name delete a person by id 
+DELETE {{server_url}}/persons/67eb0d62dd8d5c169e245e0a HTTP/1.1
 
-### delete a valid person
+###
 
-DELETE {{server_url}}/persons/2 HTTP/1.1
-
-### delete a invalid person
-
-DELETE {{server_url}}/persons/99999 HTTP/1.1
-
-### create new user on the server 
-
+# @name create a new person
 POST {{server_url}}/persons/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "felix",
+  "number": "134235423455"
+}
+
+###
+
+# @name check invalid url
+GET {{server_url}}/smthWhichDoesntExist HTTP/1.1
+
+###
+
+# @name = update a person by id 
+PUT {{server_url}}/persons/67eb0d62dd8d5c169e245e0a HTTP/1.1
 Content-Type: application/json
 
 {
   "name": "felix",
   "number": "13465345"
 }
-
-### try to recreate the same user
-
-POST {{server_url}}/persons/ HTTP/1.1
-Content-Type: application/json
-
-{
-  "name": "felix",
-  "number": "13465345"
-}
-
-### check invalid url
-{{server_url}}/smthWhichDoesntExist HTTP/1.1
