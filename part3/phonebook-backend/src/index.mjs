@@ -8,9 +8,16 @@ import morgan from "morgan";
 import { morganCustomFormat } from "./misc/morganCustomFormat.mjs";
 import { mongoConnect } from "./db/mongo.db.mjs";
 import { errorHandler } from "./middlewares/errorHandler.middleware.mjs";
+import path from "path";
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
+
+/* static */
+// const __dirname = path.resolve(import.meta.dirname);
+// const frontend = path.join(__dirname, "./../frontend/");
+// app.use(express.static(frontend));
+
 app.use(express.json());
 app.use(morgan(morganCustomFormat));
 

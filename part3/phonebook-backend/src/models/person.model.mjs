@@ -7,7 +7,7 @@ const personSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: validatePersonName,
-      message: ({value}) => `${value} is not a valid phone number!`,
+      message: ({ value }) => `${value} is not a valid phone number!`,
     }
   },
 });

@@ -1,5 +1,4 @@
 import { StatusCodes } from "http-status-codes";
-import { db } from "../../db.mjs";
 import { Person } from "../models/person.model.mjs";
 
 export async function showInfo(req, res) {
