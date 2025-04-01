@@ -37,7 +37,7 @@ export function PersonTableView({ persons, setPersons, setMessage }) {
   return (
     <table>
       <tbody>
-        {persons.map(({ id, name, phone }) => (
+        {persons.map(({ id, name, number }) => (
           <tr key={id}>
             <td>
               <button className="deletePersonButton" onClick={handleDelete(id)}>
@@ -45,7 +45,7 @@ export function PersonTableView({ persons, setPersons, setMessage }) {
               </button>
             </td>
             <td>{name}</td>
-            <td>{phone}</td>
+            <td>{number}</td>
           </tr>
         ))}
       </tbody>

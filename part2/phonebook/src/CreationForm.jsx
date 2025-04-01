@@ -19,15 +19,19 @@ export function CreationForm({ persons, setPersons, setMessage }) {
     // check if person exsists
     let person = persons.find((person) => person.name === newName);
     if (person) {
-      updatePerson({ ...person, phone: newPhone }).then((p) => {
+      updatePerson({ ...person, number: newPhone }).then((p) => {
         setPersons(persons.map((person) => (person.id === p.id ? p : person)));
         setMessage({ level: "success", data: `Updated ${p.name}` });
       });
     } else {
-      addPerson({ name: newName, phone: newPhone }).then((p) => {
-        setPersons([...persons, p]);
-        setMessage({ level: "success", data: `Added ${p.name}` });
-      });
+      addPerson({ name: newName, number: newPhone })
+        .then((p) => {
+          setPersons([...persons, p]);
+          setMessage({ level: "success", data: `Added ${p.name}` });
+        })
+        .catch((error) => {
+          setMessage({ level: "error", data: error.response.data.message });
+        });
     }
     setName("");
     setPhone("");
