@@ -1,0 +1,17 @@
+@server = "http://localhost:3000/api/blogs"
+
+### 
+# @name = get all blogs
+GET {{server}}
+
+###
+# @name = create a new blog
+POST {{server}}
+Content-Type: application/json
+
+{
+  "title": "A New Blog",
+  "author": "Admin",
+  "url": "http://google.com",
+  "likes": 10
+}
