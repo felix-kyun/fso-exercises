@@ -1,4 +1,3 @@
-import "dotenv/config";
 import express from "express";
 import "express-async-errors";
 import personRouter from "./routes/person.route.mjs";
@@ -9,8 +8,8 @@ import { morganCustomFormat } from "./misc/morganCustomFormat.mjs";
 import { mongoConnect } from "./db/mongo.db.mjs";
 import { errorHandler } from "./middlewares/errorHandler.middleware.mjs";
 import path from "path";
+import { PORT } from "./misc/config.mjs";
 
-const port = process.env.PORT || 3000;
 const app = express();
 
 /* static */
@@ -35,4 +34,4 @@ app.use(errorHandler);
 await mongoConnect();
 
 /* start express */
-app.listen(port, () => console.log(`Server started on :${port}`));
+app.listen(PORT, () => console.log(`Server started on :${PORT}`));
