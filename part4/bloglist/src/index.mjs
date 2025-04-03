@@ -1,5 +1,5 @@
 import express from "express";
-import { PORT } from "./misc/config.mjs";
+import { PORT } from "./utils/config.mjs";
 import { notFound } from "./middlewares/notFound.middleware.mjs";
 import { errorHandler } from "./middlewares/errorHandler.middleware.mjs";
 import { mongoConnect } from "./db/mongo.db.mjs";

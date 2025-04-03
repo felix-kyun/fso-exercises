@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { MONGO_URI } from "../misc/config.mjs";
+import { MONGO_URI } from "../utils/config.mjs";
 
 export async function mongoConnect() {
   try {
