@@ -1,7 +1,7 @@
 import { test, describe } from "node:test";
 import assert from "node:assert";
+import blogs from "./blogs.mjs"
 import { totalLikes } from "../src/utils/totalLikes.mjs";
-import blogs from "./blogs.mjs";
 
 describe("Total Likes", () => {
 

@@ -4,6 +4,7 @@ import { notFound } from "./middlewares/notFound.middleware.mjs";
 import { errorHandler } from "./middlewares/errorHandler.middleware.mjs";
 import { mongoConnect } from "./db/mongo.db.mjs";
 import blogRouter from "./routes/blog.route.mjs";
+import { logSuccess } from "./utils/logger.mjs";
 
 const app = express();
 
@@ -23,4 +24,7 @@ app.use(errorHandler);
 await mongoConnect();
 
 /* Start Server */
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+if (process.env.NODE_ENV !== "test")
+  app.listen(PORT, () => logSuccess(`Server running on port ${PORT}`, "express"));
+
+export default app;
