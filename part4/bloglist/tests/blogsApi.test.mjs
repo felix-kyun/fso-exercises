@@ -80,6 +80,23 @@ describe("Blogs Api Tests", () => {
 		);
 	});
 
+	test("likes defaults to 0 if missing", async () => {
+		const new_blog = {
+			title: "New Blog",
+			author: "Admin",
+			url: "https://example.com",
+			likes: 0,
+		};
+
+		let response = await api
+			.post("/api/blogs")
+			.send(new_blog)
+			.expect(201)
+			.expect("Content-Type", /application\/json/);
+
+		assert.ok(response.body.likes === 0, "Likes not defaulted to 0");
+	});
+
 	after(async () => {
 		await Blog.deleteMany({});
 		await mongoose.connection.close();
