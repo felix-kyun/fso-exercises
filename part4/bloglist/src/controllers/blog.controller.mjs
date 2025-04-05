@@ -42,3 +42,24 @@ export async function deleteBlogById(req, res) {
 
 	return res.status(204).send();
 }
+
+export async function updateBlogById(req, res) {
+	const { id } = req.params;
+	if (!validateMongooseId(id)) throw new ServerError("Invalid Id", 400);
+
+	const blog = await Blog.findById(id);
+	if (!blog) throw new ServerError("Blog not found", 404);
+
+	const { title, author, url, likes } = req.body;
+
+	blog.title = title ?? blog.title;
+	blog.author = author ?? blog.author;
+	blog.url = url ?? blog.url;
+	blog.likes = likes ?? blog.likes;
+
+	await blog.save();
+
+	return res.status(200).json(blog);
+
+	// await Blog.replaceOne({ _id: id }, { title, author, url, likes });
+}

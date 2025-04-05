@@ -156,6 +156,30 @@ describe("Blogs API test", async () => {
 		});
 	});
 
+	describe("update a blog", async () => {
+		test("200 with a valid id and content updated", async () => {
+			const response = await api
+				.put(`/api/blogs/${blogs[0].id}`)
+				.send({
+					...blogs[0],
+					title: "Updated title",
+				})
+				.expect(200);
+
+			assert.strictEqual(response.body.title, "Updated title");
+		});
+
+		test("404 with non exsistant id", async () => {
+			await api
+				.put(`/api/blogs/${new mongoose.Types.ObjectId()}`)
+				.expect(404);
+		});
+
+		test("400 with an invalid id", async () => {
+			await api.put(`/api/blogs/1234567890`).expect(400);
+		});
+	});
+
 	after(async () => {
 		await Blog.deleteMany({});
 		await mongoose.connection.close();

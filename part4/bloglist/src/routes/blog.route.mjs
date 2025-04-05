@@ -4,11 +4,16 @@ import {
 	deleteBlogById,
 	getAllBlogs,
 	getBlogById,
+	updateBlogById,
 } from "../controllers/blog.controller.mjs";
 
 const router = express.Router();
 
 router.route("/").get(getAllBlogs).post(createBlog);
-router.route("/:id").get(getBlogById).delete(deleteBlogById);
+router
+	.route("/:id")
+	.get(getBlogById)
+	.delete(deleteBlogById)
+	.put(updateBlogById);
 
 export default router;
