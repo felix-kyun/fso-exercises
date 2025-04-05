@@ -1,3 +1,4 @@
+import { ServerError } from "../errors/server.error.mjs";
 import { Blog } from "../models/blog.model.mjs";
 
 export async function getAllBlogs(req, res) {
@@ -15,6 +16,8 @@ export async function createBlog(req, res) {
 		url,
 		likes,
 	});
+
+	if (!title || !url) throw new ServerError("Missing title or url", 400);
 
 	return res.status(201).json(blog);
 }

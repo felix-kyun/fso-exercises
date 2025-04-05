@@ -74,8 +74,9 @@ describe("Blogs Api Tests", () => {
 		assert.deepStrictEqual(response.body, new_blog);
 
 		const responseAll = await api.get("/api/blogs").expect(200);
-		assert.ok(
-			blogs.length + 1 === responseAll.body.length,
+		assert.strictEqual(
+			blogs.length + 1,
+			responseAll.body.length,
 			"Blog not created"
 		);
 	});
@@ -94,7 +95,25 @@ describe("Blogs Api Tests", () => {
 			.expect(201)
 			.expect("Content-Type", /application\/json/);
 
-		assert.ok(response.body.likes === 0, "Likes not defaulted to 0");
+		assert.strictEqual(response.body.likes, 0, "Likes not defaulted to 0");
+	});
+
+	test("server returns 400 on missing missing title or url", async () => {
+		const title = "title";
+		const author = "author";
+		const url = "https://example.com";
+
+		const responseWithoutTitle = await api
+			.post("/api/blogs")
+			.send({ author, url });
+
+		assert.strictEqual(responseWithoutTitle.status, 400);
+
+		const responseWithoutURL = await api
+			.post("/api/blogs")
+			.send({ author, title });
+
+		assert.strictEqual(responseWithoutURL.status, 400);
 	});
 
 	after(async () => {
