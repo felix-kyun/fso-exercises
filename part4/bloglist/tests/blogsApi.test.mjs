@@ -55,7 +55,33 @@ describe("Blogs Api Tests", () => {
 		);
 	});
 
+	test("POST /api/blogs creates a new blog", async () => {
+		const new_blog = {
+			title: "New Blog",
+			author: "Admin",
+			url: "https://example.com",
+			likes: 0,
+		};
+
+		let response = await api
+			.post("/api/blogs")
+			.send(new_blog)
+			.expect(201)
+			.expect("Content-Type", /application\/json/);
+
+		delete response.body.id;
+
+		assert.deepStrictEqual(response.body, new_blog);
+
+		const responseAll = await api.get("/api/blogs").expect(200);
+		assert.ok(
+			blogs.length + 1 === responseAll.body.length,
+			"Blog not created"
+		);
+	});
+
 	after(async () => {
+		await Blog.deleteMany({});
 		await mongoose.connection.close();
 	});
 });
