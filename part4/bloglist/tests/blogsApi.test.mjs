@@ -1,11 +1,4 @@
-import {
-	test,
-	after,
-	describe,
-	before,
-	beforeEach,
-	afterEach,
-} from "node:test";
+import { test, after, describe, beforeEach } from "node:test";
 import assert from "node:assert";
 import supertest from "supertest";
 import mongoose from "mongoose";
@@ -22,7 +15,7 @@ const blogs = rawBlogs.map((blog) => {
 	return blog;
 });
 
-describe("Blogs Api Tests", () => {
+describe("Blogs API test", async () => {
 	beforeEach(async () => {
 		await Blog.deleteMany({});
 		// as Blog.create doesn't maintain order
@@ -32,88 +25,135 @@ describe("Blogs Api Tests", () => {
 		}
 	});
 
-	test("GET /blogs returns all blogs in JSON format", async () => {
-		const response = await api
-			.get("/api/blogs")
-			.expect(200)
-			.expect("Content-Type", /application\/json/);
-
-		const blogsInResponse = response.body.map((blog) => {
-			return blog;
+	describe("Initial tests", async () => {
+		test("check if the blogs are returned as json", async () => {
+			await api
+				.get("/api/blogs")
+				.expect(200)
+				.expect("Content-Type", /application\/json/);
 		});
 
-		assert.strictEqual(blogs.length, blogsInResponse.length);
-		assert.deepStrictEqual(blogs, blogsInResponse);
+		test("check if all the blogs are present", async () => {
+			const response = (await api.get("/api/blogs")).body;
+
+			assert.strictEqual(response.length, blogs.length);
+		});
+
+		test("check a random blog is present", async () => {
+			const response = (await api.get("/api/blogs")).body;
+
+			assert.deepStrictEqual(response[1], blogs[1]);
+		});
+		test("all the blogs have their _id property replaced with id", async () => {
+			const response = (await api.get("/api/blogs").expect(200)).body;
+
+			assert.ok(
+				response.every((blog, index) => blogs[index].id === blog.id)
+			);
+		});
 	});
 
-	test("all the blogs have their _id property replaced with id", async () => {
-		const response = await api.get("/api/blogs").expect(200);
-		const blogsInResponse = response.body;
+	describe("view specific blog", async () => {
+		test("200 with valid id", async () => {
+			const response = (
+				await api.get(`/api/blogs/${blogs[2].id}`).expect(200)
+			).body;
 
-		assert.ok(
-			blogsInResponse.every((blog, index) => blogs[index].id === blog.id)
-		);
+			assert.deepStrictEqual(response, blogs[2]);
+		});
+
+		test("404 with non exsistant id", async () => {
+			await api
+				.get(`/api/blogs/${new mongoose.Types.ObjectId()}`)
+				.expect(404);
+		});
+
+		test("400 with an invalid id", async () => {
+			await api.get(`/api/blogs/1234567890`).expect(400);
+		});
 	});
 
-	test("POST /api/blogs creates a new blog", async () => {
-		const new_blog = {
-			title: "New Blog",
-			author: "Admin",
-			url: "https://example.com",
-			likes: 0,
-		};
+	describe("create a new blog", async () => {
+		test("success with valid data", async () => {
+			const new_blog = {
+				title: "New Blog",
+				author: "Admin",
+				url: "https://example.com",
+				likes: 0,
+			};
 
-		let response = await api
-			.post("/api/blogs")
-			.send(new_blog)
-			.expect(201)
-			.expect("Content-Type", /application\/json/);
+			let response = await api
+				.post("/api/blogs")
+				.send(new_blog)
+				.expect(201)
+				.expect("Content-Type", /application\/json/);
 
-		delete response.body.id;
+			delete response.body.id;
 
-		assert.deepStrictEqual(response.body, new_blog);
+			assert.deepStrictEqual(response.body, new_blog);
 
-		const responseAll = await api.get("/api/blogs").expect(200);
-		assert.strictEqual(
-			blogs.length + 1,
-			responseAll.body.length,
-			"Blog not created"
-		);
+			const responseAll = await api.get("/api/blogs").expect(200);
+			assert.strictEqual(
+				blogs.length + 1,
+				responseAll.body.length,
+				"Blog not created"
+			);
+		});
+
+		test("likes defaults to 0 if missing", async () => {
+			const new_blog = {
+				title: "New Blog",
+				author: "Admin",
+				url: "https://example.com",
+				likes: 0,
+			};
+
+			let response = await api
+				.post("/api/blogs")
+				.send(new_blog)
+				.expect(201)
+				.expect("Content-Type", /application\/json/);
+
+			assert.strictEqual(
+				response.body.likes,
+				0,
+				"Likes not defaulted to 0"
+			);
+		});
+
+		test("server returns 400 on missing missing title or url", async () => {
+			const title = "title";
+			const author = "author";
+			const url = "https://example.com";
+
+			const responseWithoutTitle = await api
+				.post("/api/blogs")
+				.send({ author, url });
+
+			assert.strictEqual(responseWithoutTitle.status, 400);
+
+			const responseWithoutURL = await api
+				.post("/api/blogs")
+				.send({ author, title });
+
+			assert.strictEqual(responseWithoutURL.status, 400);
+		});
 	});
 
-	test("likes defaults to 0 if missing", async () => {
-		const new_blog = {
-			title: "New Blog",
-			author: "Admin",
-			url: "https://example.com",
-			likes: 0,
-		};
+	describe("delete a blog", async () => {
+		test("204 with a valid id", async () => {
+			await api.delete(`/api/blogs/${blogs[0].id}`).expect(204);
+		});
 
-		let response = await api
-			.post("/api/blogs")
-			.send(new_blog)
-			.expect(201)
-			.expect("Content-Type", /application\/json/);
+		test("404 with non exsistant id", async () => {
+			await api
+				.delete(`/api/blogs/${new mongoose.Types.ObjectId()}`)
+				.expect(404);
+		});
 
-		assert.strictEqual(response.body.likes, 0, "Likes not defaulted to 0");
-	});
-
-	test("server returns 400 on missing missing title or url", async () => {
-		const title = "title";
-		const author = "author";
-		const url = "https://example.com";
-
-		const responseWithoutTitle = await api
-			.post("/api/blogs")
-			.send({ author, url });
-
-		assert.strictEqual(responseWithoutTitle.status, 400);
-
-		const responseWithoutURL = await api
-			.post("/api/blogs")
-			.send({ author, title });
-
-		assert.strictEqual(responseWithoutURL.status, 400);
+		test("400 with an invalid id", async () => {
+			await api.delete(`/api/blogs/1234567890`).expect(400);
+		});
 	});
 
 	after(async () => {
