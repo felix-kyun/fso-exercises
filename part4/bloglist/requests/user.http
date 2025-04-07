@@ -1,0 +1,17 @@
+@server = "http://localhost:3000/api/users"
+
+###
+# @name get all users
+GET {{server}}
+
+###
+# @name = create a new user
+POST {{server}}
+Content-Type: application/json
+
+{
+  "username": "newuser",
+  "name": "New User",
+  "password": "password123"
+}
+

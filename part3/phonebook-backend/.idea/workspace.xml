@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0e559f4e-1ffb-46a6-b67f-3f8cf67496f6" name="Changes" comment="" />
+    <list default="true" id="0e559f4e-1ffb-46a6-b67f-3f8cf67496f6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../part4/bloglist/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../part4/bloglist/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../part4/bloglist/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../part4/bloglist/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../part4/bloglist/src/app.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/../../part4/bloglist/src/app.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../part4/bloglist/src/utils/config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/../../part4/bloglist/src/utils/config.mjs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 6
-}]]></component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2v9iIlGiJw62vMHGzzHN6lgNDq4" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -18,13 +27,27 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "HTTP Request.phonebook | get all persons.executor": "Run",
+    "Node.js.index.mjs.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "pnpm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="phonebook | get all persons" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/requests/phonebook.http" executionIdentifier="get all persons" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP Request.phonebook | get all persons" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -41,6 +64,9 @@
       <option name="presentableId" value="Default" />
       <updated>1743563613378</updated>
       <workItem from="1743563614888" duration="37000" />
+      <workItem from="1744000382260" duration="12000" />
+      <workItem from="1744000401575" duration="21000" />
+      <workItem from="1744009830737" duration="38000" />
     </task>
     <servers />
   </component>

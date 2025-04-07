@@ -13,5 +13,14 @@ Content-Type: application/json
   "title": "A New Blog",
   "author": "Admin",
   "url": "http://google.com",
-  "likes": 10
+  "likes": 10,
+  "user": "67f3f4d0c9aea98ab38fd871"
 }
+
+###
+# @name = get a blog by id
+GET {{server}}/67f3f60ad3a04265954d9061
+
+### 
+# @name = delete a blog
+DELETE {{server}}/67f4241f7d8c429b5390bc9d
