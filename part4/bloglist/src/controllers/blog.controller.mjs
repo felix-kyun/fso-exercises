@@ -16,14 +16,8 @@ export async function getAllBlogs(req, res) {
 
 export async function createBlog(req, res) {
   const { title, author, url, likes } = req.body;
+  const { user } = req;
 
-  if (!req.token)
-    throw new ServerError("Token missing or invalid", StatusCodes.UNAUTHORIZED);
-
-  const user = await User.findOne({ _id: req.auth.id });
-
-  if (!user)
-    throw new ServerError("User Doens't exsist", StatusCodes.NOT_FOUND);
   if (!title || !url)
     throw new ServerError("Missing title or url", StatusCodes.BAD_REQUEST);
 
@@ -32,7 +26,7 @@ export async function createBlog(req, res) {
     author,
     url,
     likes,
-    user: req.auth.id,
+    user: user.id,
   });
 
   await blog.populate("user", { username: 1, id: 1, name: 1 });

@@ -8,12 +8,15 @@ import userRouter from "./routes/user.route.mjs";
 import loginRouter from "./routes/login.route.mjs";
 import { logSuccess } from "./utils/logger.mjs";
 import { jwtParser } from "./middlewares/jwtParser.middleware.mjs";
+import morgan from "morgan";
+import { morganFormat } from "./utils/morganFormat.mjs";
 
 const app = express();
 
 /* Middleware */
+app.use(morgan(morganFormat));
 app.use(express.json());
-app.use(jwtParser)
+app.use(jwtParser);
 
 /* Routes */
 app.use("/api/blogs/", blogRouter);
@@ -31,6 +34,8 @@ await mongoConnect();
 
 /* Start Server */
 if (process.env.NODE_ENV !== "test")
-  app.listen(PORT, () => logSuccess(`Server running on port ${PORT}`, "express"));
+  app.listen(PORT, () =>
+    logSuccess(`Server running on port ${PORT}`, "express"),
+  );
 
 export default app;
