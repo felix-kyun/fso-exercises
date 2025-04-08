@@ -53,8 +53,18 @@ export async function getBlogById(req, res) {
 }
 
 export async function deleteBlogById(req, res) {
+  if (!req.token)
+    throw new ServerError("Token missing or invalid", StatusCodes.UNAUTHORIZED);
+
   const { id } = req.params;
   if (!validateMongooseId(id)) throw new ServerError("Invalid Id", 400);
+
+  const blog = await Blog.findById(id);
+
+  if (!blog) throw new ServerError("Blog not found", 404);
+
+  if (req.auth.id.toString() !== blog.user.toString())
+    throw new ServerError("Unauthorized", StatusCodes.UNAUTHORIZED);
 
   const { deletedCount } = await Blog.deleteOne({ _id: id });
   if (!deletedCount) throw new ServerError("Blog not found", 404);
