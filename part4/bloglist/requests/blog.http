@@ -8,6 +8,7 @@ GET {{server}}
 # @name = create a new blog
 POST {{server}}
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ld3VzZXIiLCJpZCI6IjY3ZjU2NDk3ZmY5Mzg0MDg5YjU2M2QxYSIsImlhdCI6MTc0NDEzNTMzNX0.P-b5lFmPvthq-a7rg2FZy9MSI3s0RI9WjyRYuixFahc
 
 {
   "title": "A New Blog",

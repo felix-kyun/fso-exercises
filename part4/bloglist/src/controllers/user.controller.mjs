@@ -19,7 +19,7 @@ export async function createUser(req, res) {
     password,
   });
 
-  return res.status(StatusCodes.CREATED).json(user);
+  return res.status(StatusCodes.CREATED).json(user.toJSON());
 }
 
 export async function getAllUsers(req, res) {

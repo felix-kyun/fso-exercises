@@ -31,14 +31,14 @@ userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
   const salt = await bcrypt.genSalt(SALT_ROUNDS);
-  this.passwordHash = await bcrypt.hash(this.password, salt);
+  this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
 userSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
-    delete returnedObject.passwordHash;
+    delete returnedObject.password;
     delete returnedObject._id;
     delete returnedObject.__v;
   },

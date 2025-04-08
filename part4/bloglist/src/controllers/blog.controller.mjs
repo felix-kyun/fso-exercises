@@ -3,6 +3,7 @@ import { ServerError } from "../errors/server.error.mjs";
 import { Blog } from "../models/blog.model.mjs";
 import { User } from "../models/user.model.mjs";
 import { validateMongooseId } from "../utils/validateMongooseId.mjs";
+import { decodeToken, extractToken } from "../utils/token.mjs";
 
 export async function getAllBlogs(req, res) {
   const blogs = await Blog.find({}).populate("user", {
@@ -15,8 +16,14 @@ export async function getAllBlogs(req, res) {
 }
 
 export async function createBlog(req, res) {
-  const { title, author, url, likes, user: userID } = req.body;
-  const user = await User.findOne({ _id: userID });
+  const { title, author, url, likes } = req.body;
+
+  const token = extractToken(req);
+  if (!token)
+    throw new ServerError("Token missing or invalid", StatusCodes.UNAUTHORIZED);
+
+  const id = decodeToken(token).id;
+  const user = await User.findOne({ _id: id });
 
   if (!user)
     throw new ServerError("User Doens't exsist", StatusCodes.NOT_FOUND);
@@ -28,7 +35,7 @@ export async function createBlog(req, res) {
     author,
     url,
     likes,
-    user: userID,
+    user: id,
   });
 
   await blog.populate("user", { username: 1, id: 1, name: 1 });
