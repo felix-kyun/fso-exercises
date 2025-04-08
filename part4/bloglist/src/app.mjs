@@ -7,11 +7,13 @@ import blogRouter from "./routes/blog.route.mjs";
 import userRouter from "./routes/user.route.mjs";
 import loginRouter from "./routes/login.route.mjs";
 import { logSuccess } from "./utils/logger.mjs";
+import { jwtParser } from "./middlewares/jwtParser.middleware.mjs";
 
 const app = express();
 
 /* Middleware */
 app.use(express.json());
+app.use(jwtParser)
 
 /* Routes */
 app.use("/api/blogs/", blogRouter);
