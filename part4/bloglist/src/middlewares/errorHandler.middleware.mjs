@@ -1,5 +1,6 @@
 import { ServerError } from "../errors/server.error.mjs";
 import { StatusCodes } from "http-status-codes";
+import { logError } from "../utils/logger.mjs";
 
 export async function errorHandler(err, req, res, next) {
   if (err instanceof ServerError) {
@@ -11,6 +12,8 @@ export async function errorHandler(err, req, res, next) {
 
   let message = "An unexpected error occurred";
   let status = StatusCodes.INTERNAL_SERVER_ERROR;
+
+  logError(err.message);
   switch (err.name) {
     case "CastError":
       status = StatusCodes.BAD_REQUEST;
@@ -29,7 +32,7 @@ export async function errorHandler(err, req, res, next) {
 
     case "MongoServerError":
       if (err.message.includes("E11000")) {
-        status = StatusCodes.BAD_REQUEST;
+        status = StatusCodes.CONFLICT;
         message = "duplicate key error";
       }
       break;
@@ -38,9 +41,8 @@ export async function errorHandler(err, req, res, next) {
       break;
   }
 
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+  return res.status(status).json({
     message,
-    status,
     stack: err.stack,
     error: err,
   });

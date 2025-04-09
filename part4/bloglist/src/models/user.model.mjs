@@ -7,12 +7,12 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    min: 3,
+    minLength: 3,
   },
   name: {
     type: String,
     required: true,
-    min: 3,
+    minLength: 3,
   },
   password: {
     type: String,
@@ -36,7 +36,7 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
+  transform: (_, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject.password;
     delete returnedObject._id;

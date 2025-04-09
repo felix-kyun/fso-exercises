@@ -1,15 +1,20 @@
 import { test, after, describe, beforeEach, before } from "node:test";
-import assert from "node:assert";
+import assert, { deepStrictEqual, strictEqual } from "node:assert";
 import supertest from "supertest";
 import mongoose from "mongoose";
 import app from "../src/app.mjs";
 import { Blog } from "../src/models/blog.model.mjs";
 import rawBlogs from "./blogs.mjs";
-import { createUser } from "./helpers/createUser.mjs";
+import { createUser, getToken } from "./helpers/createUser.mjs";
 import { User } from "../src/models/user.model.mjs";
 
 const api = supertest(app);
-const dummyUser = await createUser();
+
+// setup user for testing
+await User.deleteMany({});
+const dummyUser = await createUser(api);
+const dummyToken = await getToken(api, dummyUser);
+
 const blogs = rawBlogs.map((blog) => {
   blog.id = blog._id;
   delete blog._id;
@@ -48,7 +53,7 @@ describe("Blogs API test", async () => {
 
       response[1].user = dummyUser._id;
 
-      assert.deepStrictEqual(response[1], blogs[1]);
+      assert.deepStrictEqual(response[1].id, blogs[1].id);
     });
 
     test("all the blogs have their _id property replaced with id", async () => {
@@ -88,13 +93,15 @@ describe("Blogs API test", async () => {
 
       let response = await api
         .post("/api/blogs")
+        .set("authorization", `Bearer ${dummyToken}`)
         .send(new_blog)
         .expect(201)
         .expect("Content-Type", /application\/json/);
 
       delete response.body.id;
-
-      assert.deepStrictEqual(response.body, new_blog);
+      strictEqual(response.body.user.id, dummyUser.id);
+      delete response.body.user;
+      deepStrictEqual(response.body, new_blog);
 
       const responseAll = await api.get("/api/blogs").expect(200);
       assert.strictEqual(
@@ -114,11 +121,12 @@ describe("Blogs API test", async () => {
 
       let response = await api
         .post("/api/blogs")
+        .set("authorization", `Bearer ${dummyToken}`)
         .send(new_blog)
         .expect(201)
         .expect("Content-Type", /application\/json/);
 
-      assert.strictEqual(response.body.likes, 0, "Likes not defaulted to 0");
+      strictEqual(response.body.likes, 0, "Likes not defaulted to 0");
     });
 
     test("server returns 400 on missing missing title or url", async () => {
@@ -128,31 +136,47 @@ describe("Blogs API test", async () => {
 
       const responseWithoutTitle = await api
         .post("/api/blogs")
-        .send({ author, url });
-
-      assert.strictEqual(responseWithoutTitle.status, 400);
+        .set("authorization", `Bearer ${dummyToken}`)
+        .send({ author, url })
+        .expect(400);
 
       const responseWithoutURL = await api
         .post("/api/blogs")
-        .send({ author, title });
-
-      assert.strictEqual(responseWithoutURL.status, 400);
+        .set("authorization", `Bearer ${dummyToken}`)
+        .send({ author, title })
+        .expect(400);
     });
   });
 
   describe("delete a blog", async () => {
     test("204 with a valid id", async () => {
-      await api.delete(`/api/blogs/${blogs[0].id}`).expect(204);
+      const {
+        body: { id },
+      } = await api
+        .post("/api/blogs")
+        .set("authorization", `Bearer ${dummyToken}`)
+        .send(blogs[0])
+        .expect(201)
+        .expect("Content-Type", /application\/json/);
+
+      await api
+        .delete(`/api/blogs/${id}`)
+        .set("authorization", `Bearer ${dummyToken}`)
+        .expect(204);
     });
 
     test("404 with non exsistant id", async () => {
       await api
         .delete(`/api/blogs/${new mongoose.Types.ObjectId()}`)
+        .set("authorization", `Bearer ${dummyToken}`)
         .expect(404);
     });
 
     test("400 with an invalid id", async () => {
-      await api.delete(`/api/blogs/1234567890`).expect(400);
+      await api
+        .delete(`/api/blogs/1234567890`)
+        .set("authorization", `Bearer ${dummyToken}`)
+        .expect(400);
     });
   });
 

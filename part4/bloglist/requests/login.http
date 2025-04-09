@@ -6,7 +6,7 @@ POST {{server}}
 Content-Type: application/json
 
 {
-  "username": "newuser",
+  "username": "newuser12",
   "password": "password123"
 }
 

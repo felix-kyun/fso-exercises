@@ -69,6 +69,35 @@ describe("Users API test", async () => {
     });
   });
 
+  describe("query users", async () => {
+    test("returns an array", async () => {
+      const users = await api.get("/api/users").expect(200);
+      strictEqual(Array.isArray(users.body), true);
+    });
+
+    test("it returns user with their blogs populated ", async () => {
+      const user = await api.post("/api/users").send({
+        username: "felix",
+        name: "Felix Kyun",
+        password: "password123",
+      });
+
+      const blog = {
+        title: "some title",
+        url: "http://smth.com",
+      };
+
+      const blogServer = await api
+        .post("/api/blogs")
+        .send(blog)
+        .set("Authorization", `Bearer ${user.body.token}`);
+
+      const users = await api.get(`/api/users/`).expect(200);
+
+      strictEqual(typeof users.body[0].blogs, "object");
+    });
+  });
+
   after(async () => {
     await User.deleteMany({});
     await mongoose.connection.close();
