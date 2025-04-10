@@ -15,14 +15,13 @@ export function BlogsList({ user }) {
     }
 
     fetchBlogs();
-  });
+  }, []);
 
   return (
     <div>
-      <p> hello, {user.name} </p>
       <h2>Blogs</h2>
       {blogs.map((blog) => (
-        <Blog blog={blog} />
+        <Blog key={blog.id} blog={blog} />
       ))}
     </div>
   );
