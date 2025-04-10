@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { login, signup } from "../utils/serverFunctions.mjs";
 import { InputBox } from "./InputBox";
+import { Notify } from "./Notify";
 
 export function Login({ setUser }) {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [notification, setNotification] = useState(null);
 
   function reset() {
     setUsername("");
@@ -19,7 +21,7 @@ export function Login({ setUser }) {
       setUser(user);
     } catch (error) {
       reset();
-      console.error(error.message);
+      setNotification(error.message);
     }
   }
 
@@ -30,12 +32,13 @@ export function Login({ setUser }) {
       setUser(user);
     } catch (error) {
       reset();
-      console.error(error.message);
+      setNotification(error.message);
     }
   }
 
   return (
     <div>
+      <Notify notification={notification} setNotification={setNotification} />
       <h2>Log In</h2>
       <form>
         <InputBox

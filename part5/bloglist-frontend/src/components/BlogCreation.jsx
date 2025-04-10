@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createBlog } from "../utils/serverFunctions.mjs";
 import { InputBox } from "./InputBox";
 
-export function BlogCreation({ user, setBlogs }) {
+export function BlogCreation({ user, setBlogs, setNotification }) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
@@ -23,7 +23,7 @@ export function BlogCreation({ user, setBlogs }) {
 
       setBlogs((prevBlogs) => [...prevBlogs, createdBlog]);
     } catch (error) {
-      console.error(error.message);
+      setNotification(error.message);
     }
     reset();
   }
