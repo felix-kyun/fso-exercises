@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { login, signup } from "../utils/serverFunctions.mjs";
+import { InputBox } from "./InputBox";
 
 export function Login({ setUser }) {
   const [username, setUsername] = useState("");
@@ -17,7 +18,7 @@ export function Login({ setUser }) {
       const user = await login(username, password);
       setUser(user);
     } catch (error) {
-      // reset();
+      reset();
       console.error(error.message);
     }
   }
@@ -28,7 +29,7 @@ export function Login({ setUser }) {
       const user = await signup(username, name, password);
       setUser(user);
     } catch (error) {
-      // reset();
+      reset();
       console.error(error.message);
     }
   }
@@ -37,27 +38,18 @@ export function Login({ setUser }) {
     <div>
       <h2>Log In</h2>
       <form>
-        <input
-          type="text"
+        <InputBox
           placeholder="Username"
           value={username}
-          onChange={({ target }) => setUsername(target.value)}
+          setValue={setUsername}
         />
-        <br />
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={({ target }) => setName(target.value)}
-        />
-        <br />
-        <input
-          type="password"
+        <InputBox placeholder="name" value={name} setValue={setName} />
+        <InputBox
           placeholder="Password"
           value={password}
-          onChange={({ target }) => setPassword(target.value)}
+          setValue={setPassword}
+          type="password"
         />
-        <br />
         <button type="submit" onClick={handleLogin}>
           Login
         </button>

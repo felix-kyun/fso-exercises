@@ -47,3 +47,21 @@ export async function getBlogs() {
 
   return data;
 }
+
+export async function createBlog(user, blog) {
+  const response = await fetch(`${SERVER_URL}/api/blogs`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${user.token}`,
+    },
+    body: JSON.stringify(blog),
+  });
+
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.message || "Creating blog failed");
+  }
+
+  return await response.json();
+}
