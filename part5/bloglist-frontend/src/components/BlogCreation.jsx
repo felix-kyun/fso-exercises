@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createBlog } from "../utils/serverFunctions.mjs";
 import { InputBox } from "./InputBox";
 
-export function BlogCreation({ user, setBlogs, setNotification }) {
+export function BlogCreation({ user, setBlogs, setNotification, createBlog }) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
@@ -17,15 +17,7 @@ export function BlogCreation({ user, setBlogs, setNotification }) {
 
   async function handleCreateBlog(ev) {
     ev.preventDefault();
-    try {
-      const blog = { title, author, url, likes };
-      const createdBlog = await createBlog(user, blog);
-
-      setBlogs((prevBlogs) => [...prevBlogs, createdBlog]);
-    } catch (error) {
-      setNotification(error.message);
-    }
-    reset();
+    createBlog({ title, author, url, likes });
   }
 
   return (
