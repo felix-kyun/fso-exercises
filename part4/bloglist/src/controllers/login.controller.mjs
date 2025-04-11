@@ -31,6 +31,7 @@ export async function login(req, res) {
   return res.status(200).json({
     username: user.username,
     name: user.name,
+    id: user._id,
     token: generateToken(user),
   });
 }

@@ -75,3 +75,13 @@ export async function updateBlog(blog) {
     body: JSON.stringify(blog),
   });
 }
+
+export async function deleteBlog(user, id) {
+  const response = await fetch(`${SERVER_URL}/api/blogs/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${user.token}`,
+    },
+  });
+}

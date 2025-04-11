@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { createBlog, getBlogs, updateBlog } from "../utils/serverFunctions.mjs";
+import {
+  createBlog,
+  getBlogs,
+  updateBlog,
+  deleteBlog as blogDelete,
+} from "../utils/serverFunctions.mjs";
 import { Blog } from "./Blog";
 import { BlogCreation } from "./BlogCreation";
 import { Notify } from "./Notify";
@@ -49,6 +54,18 @@ export function BlogsList({ user }) {
     }
   }
 
+  async function deleteBlog({ id, title }) {
+    try {
+      const confirmation = window.confirm(
+        `Do You really want to delete "${title} ?"`,
+      );
+      if (!confirmation) return;
+      await blogDelete(user, id);
+      setBlogs(blogs.filter((blog) => blog.id !== id));
+    } catch (error) {
+      setNotification(error.message);
+    }
+  }
   return (
     <div>
       <Notify notification={notification} setNotification={setNotification} />
@@ -61,7 +78,13 @@ export function BlogsList({ user }) {
       {blogs
         .toSorted((a, b) => Number(b.likes) - Number(a.likes))
         .map((blog) => (
-          <Blog key={blog.id} blog={blog} incrementLikes={incrementLikes} />
+          <Blog
+            key={blog.id}
+            blog={blog}
+            incrementLikes={incrementLikes}
+            user={user}
+            deleteBlog={deleteBlog}
+          />
         ))}
     </div>
   );
