@@ -65,3 +65,13 @@ export async function createBlog(user, blog) {
 
   return await response.json();
 }
+
+export async function updateBlog(blog) {
+  const response = await fetch(`${SERVER_URL}/api/blogs/${blog.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(blog),
+  });
+}

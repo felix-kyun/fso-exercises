@@ -25,3 +25,15 @@ GET {{server}}/67f3f60ad3a04265954d9061
 ### 
 # @name = delete a blog
 DELETE {{server}}/67f4241f7d8c429b5390bc9d
+
+###
+# @name = update a blog
+PUT {{server}}/67f5661fff9384089b563d1f
+Content-Type: application/json
+
+{
+  "title": "Updated Blog Title",
+  "author": "Updated Author",
+  "url": "http://updated-url.com",
+  "likes": 20
+}

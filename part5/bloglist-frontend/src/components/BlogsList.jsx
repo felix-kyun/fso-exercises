@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createBlog, getBlogs } from "../utils/serverFunctions.mjs";
+import { createBlog, getBlogs, updateBlog } from "../utils/serverFunctions.mjs";
 import { Blog } from "./Blog";
 import { BlogCreation } from "./BlogCreation";
 import { Notify } from "./Notify";
@@ -33,6 +33,22 @@ export function BlogsList({ user }) {
     }
   }
 
+  async function incrementLikes({ id, likes, author, title, url }) {
+    try {
+      await updateBlog({ id, author, title, url, likes: likes + 1 });
+      const updatedBlogs = blogs.map((blog) => {
+        if (blog.id === id) {
+          return { ...blog, likes: blog.likes + 1 };
+        }
+
+        return blog;
+      });
+      setBlogs(updatedBlogs);
+    } catch (error) {
+      setNotification(error.message);
+    }
+  }
+
   return (
     <div>
       <Notify notification={notification} setNotification={setNotification} />
@@ -43,7 +59,7 @@ export function BlogsList({ user }) {
 
       <h2>Blogs</h2>
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} incrementLikes={incrementLikes} />
       ))}
     </div>
   );

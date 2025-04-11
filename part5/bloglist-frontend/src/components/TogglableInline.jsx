@@ -2,9 +2,9 @@ import { useState } from "react";
 
 export function TogglableInline({
   children,
-  buttonLabel = "Cancel",
+  buttonLabel = "Show",
   initialVisible = false,
-  invisibleButtonLabel = "Show",
+  invisibleButtonLabel = "Close",
 }) {
   const [visible, setVisible] = useState(initialVisible ?? false);
 

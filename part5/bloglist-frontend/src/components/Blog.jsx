@@ -1,6 +1,6 @@
 import { TogglableInline } from "./TogglableInline";
 
-export function Blog({ blog }) {
+export function Blog({ blog, incrementLikes }) {
   return (
     <div
       style={{
@@ -16,7 +16,8 @@ export function Blog({ blog }) {
       <TogglableInline buttonLabel="View">
         <p> {blog.url}</p>
         <p>
-          Likes: {blog.likes} <button>like</button>
+          Likes: {blog.likes}{" "}
+          <button onClick={() => incrementLikes(blog)}>like</button>
         </p>
         <p>Author: {blog.author}</p>
       </TogglableInline>
