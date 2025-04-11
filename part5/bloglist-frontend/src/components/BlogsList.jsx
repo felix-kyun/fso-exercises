@@ -58,9 +58,11 @@ export function BlogsList({ user }) {
       </Togglable>
 
       <h2>Blogs</h2>
-      {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} incrementLikes={incrementLikes} />
-      ))}
+      {blogs
+        .toSorted((a, b) => Number(b.likes) - Number(a.likes))
+        .map((blog) => (
+          <Blog key={blog.id} blog={blog} incrementLikes={incrementLikes} />
+        ))}
     </div>
   );
 }
