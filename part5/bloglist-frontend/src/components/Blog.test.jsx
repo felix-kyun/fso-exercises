@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { Blog } from "./Blog";
 import userEvent from "@testing-library/user-event";
 import { describe } from "vitest";
+import mockUser from "@testing-library/user-event";
 
 describe("<Blog />", () => {
   let container;
@@ -66,5 +67,18 @@ describe("<Blog />", () => {
     expect(url).not.toBeVisible();
     expect(likes).not.toBeVisible();
     expect(titleAndAuthor).toBeVisible();
+  });
+
+  test("url and likes are shown after clicking the button", async () => {
+    const user = mockUser.setup();
+    const showButton = screen.getByText("View");
+
+    await user.click(showButton);
+
+    const url = screen.getByText("https://google.com");
+    const likes = screen.getByText("Likes: 0");
+
+    expect(url).toBeVisible();
+    expect(likes).toBeVisible();
   });
 });
