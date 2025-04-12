@@ -5,6 +5,7 @@ import { BlogCreation } from "./BlogCreation";
 import { render, screen } from "@testing-library/react";
 
 describe("<BlogCreation />", async () => {
+  // 5.16 already done hehe
   test("onSubmit calls createBlog with correct  data", async () => {
     const createBlog = vi.fn();
     const user = userEvent.setup();
