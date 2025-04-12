@@ -12,14 +12,17 @@ export function Blog({ blog, incrementLikes, deleteBlog, user }) {
         minWidth: "25%",
       }}
     >
-      <span> {blog.title}</span> &nbsp;
+      <span>
+        {" "}
+        {blog.title} - {blog.author}
+      </span>{" "}
+      &nbsp;
       <TogglableInline buttonLabel="View">
         <p> {blog.url}</p>
         <p>
           Likes: {blog.likes}{" "}
           <button onClick={() => incrementLikes(blog)}>like</button>
         </p>
-        <p>Author: {blog.author}</p>
         {user.id === blog.user.id && (
           <button onClick={() => deleteBlog(blog)}>delete</button>
         )}

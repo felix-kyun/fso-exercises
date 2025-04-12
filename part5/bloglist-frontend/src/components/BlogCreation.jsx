@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { createBlog } from "../utils/serverFunctions.mjs";
 import { InputBox } from "./InputBox";
 
-export function BlogCreation({ user, setBlogs, setNotification, createBlog }) {
+export function BlogCreation({ createBlog }) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
@@ -18,6 +17,7 @@ export function BlogCreation({ user, setBlogs, setNotification, createBlog }) {
   async function handleCreateBlog(ev) {
     ev.preventDefault();
     createBlog({ title, author, url, likes });
+    reset();
   }
 
   return (
