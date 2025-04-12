@@ -5,7 +5,6 @@ import { describe } from "vitest";
 import mockUser from "@testing-library/user-event";
 
 describe("<Blog />", () => {
-  let container;
   let mockHandler;
 
   beforeEach(() => {
@@ -30,14 +29,14 @@ describe("<Blog />", () => {
 
     mockHandler = vi.fn();
 
-    container = render(
+    render(
       <Blog
         blog={blog}
         user={user}
         incrementLikes={mockHandler}
         deleteBlog={mockHandler}
       />,
-    ).container;
+    );
   });
 
   test("renders content", async () => {
@@ -80,5 +79,15 @@ describe("<Blog />", () => {
 
     expect(url).toBeVisible();
     expect(likes).toBeVisible();
+  });
+
+  test("if the like button is clikced twice, the event handler is called twice", async () => {
+    const user = userEvent.setup();
+    const likeButton = screen.getByText("like");
+
+    await user.click(likeButton);
+    await user.click(likeButton);
+
+    expect(mockHandler.mock.calls).toHaveLength(2);
   });
 });
