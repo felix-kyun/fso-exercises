@@ -12,6 +12,7 @@ export function Login({ setUser }) {
   function reset() {
     setUsername("");
     setPassword("");
+    setName("");
   }
 
   async function handleLogin(ev) {
@@ -29,7 +30,8 @@ export function Login({ setUser }) {
     ev.preventDefault();
     try {
       const user = await signup(username, name, password);
-      setUser(user);
+      setNotification("User created successfully");
+      reset();
     } catch (error) {
       reset();
       setNotification(error.message);
