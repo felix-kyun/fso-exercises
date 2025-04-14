@@ -27,3 +27,22 @@ export async function login(page, username, password) {
     })
     .click();
 }
+
+export async function createBlog(page, title, author, url) {
+  await page
+    .getByRole("button", {
+      name: "Create New Blog",
+    })
+    .click();
+
+  await page.getByPlaceholder("Title").fill(title);
+  await page.getByPlaceholder("Author").fill(author);
+  await page.getByPlaceholder("URL").fill(url);
+
+  await page
+    .getByRole("button", {
+      name: "Create",
+      exact: true,
+    })
+    .click();
+}

@@ -1,5 +1,5 @@
 const { test, expect, beforeEach, describe } = require("@playwright/test");
-const { signup, login } = require("./helpers.mjs");
+const { signup, login, createBlog } = require("./helpers.mjs");
 
 describe("Blog Link App", () => {
   beforeEach(async ({ page, request }) => {
@@ -82,21 +82,33 @@ describe("Blog Link App", () => {
     });
 
     test("new blog can be created", async ({ page }) => {
-      await page
-        .getByRole("button", { name: "Create New Blog", exact: false })
-        .click();
-
-      await page.getByPlaceholder("Title").fill("My first blog");
-      await page.getByPlaceholder("Author").fill("felixkyun");
-      await page.getByPlaceholder("URL").fill("https://google.com");
-
-      await page
-        .getByText("Create", {
-          exact: true,
-        })
-        .click();
-
+      await createBlog(
+        page,
+        "My first blog",
+        "felixkyun",
+        "https://google.com",
+      );
       await expect(page.getByText("My first blog")).toBeVisible();
+    });
+
+    test("new blog can be liked", async ({ page }) => {
+      await createBlog(
+        page,
+        "My first blog",
+        "felixkyun",
+        "https://google.com",
+      );
+
+      await page.getByText("View").click();
+
+      const likeButton = page.getByRole("button", {
+        name: "Like",
+      });
+
+      await expect(likeButton).toBeVisible();
+      await likeButton.click();
+
+      await expect(page.getByText("1")).toBeVisible();
     });
   });
 });
