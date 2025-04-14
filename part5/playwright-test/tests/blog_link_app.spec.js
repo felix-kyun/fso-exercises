@@ -121,8 +121,6 @@ describe("Blog Link App", () => {
     });
 
     test("new blog can be deleted by the creator", async ({ page }) => {
-      await page.getByText("Logout").waitFor();
-
       await createBlog(
         page,
         "My first blog",
@@ -150,6 +148,20 @@ describe("Blog Link App", () => {
       const parent = page.getByText("a new kind of feeling").locator("..");
       await parent.getByText("View").click();
       await expect(parent.getByText("Delete")).not.toBeVisible();
+    });
+
+    test("blogs is ranked according to likes", async ({ page }) => {
+      await createBlog(page, "least ranked", "felix", "smth", "0");
+      await createBlog(page, "top ranked", "felix", "smth", "10");
+      await createBlog(page, "middle top ranked", "felix", "smth", "7");
+      await createBlog(page, "middle down ranked", "felix", "smth", "4");
+
+      const blogs = page.getByText("View").locator("..").locator("..");
+
+      await expect(blogs.nth(0)).toContainText("top ranked");
+      await expect(blogs.nth(1)).toContainText("middle top ranked");
+      await expect(blogs.nth(2)).toContainText("middle down ranked");
+      await expect(blogs.nth(3)).toContainText("least ranked");
     });
   });
 });

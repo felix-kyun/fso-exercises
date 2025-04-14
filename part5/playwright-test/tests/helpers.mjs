@@ -32,7 +32,7 @@ export async function login(page, username, password) {
   await page.getByText("Logout").waitFor();
 }
 
-export async function createBlog(page, title, author, url) {
+export async function createBlog(page, title, author, url, likes = null) {
   await page
     .getByRole("button", {
       name: "Create New Blog",
@@ -42,6 +42,7 @@ export async function createBlog(page, title, author, url) {
   await page.getByPlaceholder("Title").fill(title);
   await page.getByPlaceholder("Author").fill(author);
   await page.getByPlaceholder("URL").fill(url);
+  if (likes) page.getByPlaceholder("Likes").fill(likes);
 
   await page
     .getByRole("button", {
