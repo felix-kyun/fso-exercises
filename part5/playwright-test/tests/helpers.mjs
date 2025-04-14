@@ -13,6 +13,8 @@ export async function signup(page, username, password) {
       name: "Signup",
     })
     .click();
+
+  await page.getByText("User created successfully").waitFor();
 }
 
 export async function login(page, username, password) {
@@ -26,6 +28,8 @@ export async function login(page, username, password) {
       name: "Login",
     })
     .click();
+
+  await page.getByText("Logout").waitFor();
 }
 
 export async function createBlog(page, title, author, url) {
@@ -45,4 +49,6 @@ export async function createBlog(page, title, author, url) {
       exact: true,
     })
     .click();
+
+  await page.getByText(title).waitFor();
 }

@@ -38,7 +38,16 @@ describe("Blog Link App", () => {
 
     test("login fails with wrong creds", async ({ page }) => {
       await page.getByRole("button", { name: "Logout" }).click();
-      await login(page, "felixkyun", "wrongpassword");
+
+      await page.getByPlaceholder("Username").fill("felixkyun");
+      await page.getByPlaceholder("Password").fill("wrongpassword");
+
+      await page
+        .getByRole("button", {
+          name: "Login",
+        })
+        .click();
+
       await expect(
         page.getByText("incorrect username or password"),
       ).toBeVisible();
@@ -109,6 +118,23 @@ describe("Blog Link App", () => {
       await likeButton.click();
 
       await expect(page.getByText("1")).toBeVisible();
+    });
+
+    test("new blog can be deleted by the creator", async ({ page }) => {
+      await page.getByText("Logout").waitFor();
+
+      await createBlog(
+        page,
+        "My first blog",
+        "felixkyun",
+        "https://google.com",
+      );
+
+      await page.getByText("View").click();
+      await expect(page.getByText("Delete")).toBeVisible();
+      page.on("dialog", (dialog) => dialog.accept());
+      await page.getByText("Delete").click();
+      await expect(page.getByText("My first blog")).not.toBeVisible();
     });
   });
 });
