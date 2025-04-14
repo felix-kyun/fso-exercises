@@ -136,5 +136,20 @@ describe("Blog Link App", () => {
       await page.getByText("Delete").click();
       await expect(page.getByText("My first blog")).not.toBeVisible();
     });
+
+    test("new blog cannot be deleted by other users", async ({ page }) => {
+      await page.getByText("Logout").click();
+
+      await signup(page, "idkman", "idkman");
+      await login(page, "idkman", "idkman");
+      await createBlog(page, "a new kind of feeling", "idkman", "someurl");
+
+      await page.getByText("Logout").click();
+      await login(page, "felixkyun", "felix@2005");
+
+      const parent = page.getByText("a new kind of feeling").locator("..");
+      await parent.getByText("View").click();
+      await expect(parent.getByText("Delete")).not.toBeVisible();
+    });
   });
 });
