@@ -50,10 +50,6 @@ export function vote(id) {
 export function createAnecdote(content) {
 	return {
 		type: "CREATE",
-		payload: {
-			content,
-			id: getId(),
-			votes: 0,
-		},
+		payload: asObject(content),
 	};
 }
