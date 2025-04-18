@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 
 import { createStore } from "redux";
 import reducer from "./reducer";
+import { Provider } from "react-redux";
 
 const store = createStore(reducer);
 
@@ -29,7 +30,11 @@ const App = () => {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const renderApp = () => {
-  root.render(<App />);
+  root.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+  );
 };
 
 renderApp();
