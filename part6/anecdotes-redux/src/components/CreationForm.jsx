@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { create } from "../reducers/anecdoteReducer";
+import { setNotification } from "../reducers/notificationSlice.mjs";
 
 export function CreationForm() {
   const dispatch = useDispatch();
@@ -9,6 +10,7 @@ export function CreationForm() {
     const content = e.target.content.value;
     e.target.content.value = "";
     dispatch(create(content));
+    dispatch(setNotification("created blog"));
   };
 
   return (
