@@ -1,15 +1,21 @@
 import { useDispatch } from "react-redux";
 import { vote } from "./../reducers/anecdoteReducer";
+import { setNotification } from "../reducers/notificationSlice.mjs";
 
 export function Anecdote({ anecdote }) {
   const dispatch = useDispatch();
+
+  function handleVote(e) {
+    dispatch(vote(anecdote.id));
+    dispatch(setNotification(`you voted for '${anecdote.content}'`));
+  }
 
   return (
     <div>
       <div>{anecdote.content}</div>
       <div>
         has {anecdote.votes}
-        <button onClick={() => dispatch(vote(anecdote.id))}>vote</button>
+        <button onClick={handleVote}>vote</button>
       </div>
     </div>
   );
