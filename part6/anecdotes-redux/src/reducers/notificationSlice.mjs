@@ -2,19 +2,26 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const { reducer, actions } = createSlice({
   name: "notification",
-  initialState: "",
+  initialState: {
+    content: "",
+    timeout: null,
+  },
   reducers: {
     setNotification(state, action) {
-      state = action.payload;
-      return state;
+      state.content = action.payload;
+      if (state.timeout) clearTimeout(state.timeout);
+    },
+
+    setTimer(state, action) {
+      state.timeout = action.payload;
     },
 
     reset(state, action) {
-      state = "";
-      return state;
+      state.content = "";
+      state.timeout = null;
     },
   },
 });
 
 export default reducer;
-export const { setNotification, reset } = actions;
+export const { setNotification, reset, setTimer } = actions;
