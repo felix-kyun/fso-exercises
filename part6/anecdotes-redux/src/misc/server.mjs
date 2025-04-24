@@ -8,3 +8,20 @@ export async function getAnecdotes() {
   const anecdotes = await response.json();
   return anecdotes;
 }
+
+export async function createAnecdote(content) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ content, votes: 0 }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create anecdote");
+  }
+
+  const newAnecdote = await response.json();
+  return newAnecdote;
+}
