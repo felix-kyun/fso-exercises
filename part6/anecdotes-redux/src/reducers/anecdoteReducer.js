@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getAnecdotes,
   createAnecdote as serverCreate,
+  voteAnecdote as serverVote,
 } from "../misc/server.mjs";
 import { Anecdote } from "../components/Anecdote";
 
@@ -33,4 +34,9 @@ export const initializeAnecdotes = () => async (dispatch) => {
 export const createAnecdote = (content) => async (dispatch) => {
   const newAnecdote = await serverCreate(content);
   dispatch(create(newAnecdote));
+};
+
+export const voteAnecdote = (anecdotes) => async (dispatch) => {
+  const updatedAnecdote = await serverVote(anecdotes);
+  dispatch(vote(anecdotes.id));
 };

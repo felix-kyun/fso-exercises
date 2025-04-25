@@ -25,3 +25,20 @@ export async function createAnecdote(content) {
   const newAnecdote = await response.json();
   return newAnecdote;
 }
+
+export async function voteAnecdote({ id, votes }) {
+  const response = await fetch(`${url}/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ votes: votes + 1 }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to vote for anecdote");
+  }
+
+  const updatedAnecdote = await response.json();
+  return updatedAnecdote;
+}
