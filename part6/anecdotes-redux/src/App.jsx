@@ -11,7 +11,8 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setNotification("welcome"));
+    // dispatch(setNotification("welcome"));
+    dispatch(setNotification("welcome", 5));
   }, [dispatch]);
 
   useEffect(() => {

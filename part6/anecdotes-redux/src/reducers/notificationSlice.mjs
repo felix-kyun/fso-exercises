@@ -7,7 +7,7 @@ const { reducer, actions } = createSlice({
     timeout: null,
   },
   reducers: {
-    setNotification(state, action) {
+    set(state, action) {
       state.content = action.payload;
       if (state.timeout) clearTimeout(state.timeout);
     },
@@ -24,4 +24,21 @@ const { reducer, actions } = createSlice({
 });
 
 export default reducer;
-export const { setNotification, reset, setTimer } = actions;
+export const { set, reset, setTimer } = actions;
+
+export const setNotification =
+  (content, time = 5) =>
+    async (dispatch, getState) => {
+      dispatch(set(content));
+      const {
+        notification: { timeout },
+      } = getState();
+
+      console.log(time);
+
+      // clear old timeout if any
+      if (timeout) clearTimeout(timeout);
+
+      // reset the content after time
+      dispatch(setTimer(setTimeout(() => dispatch(set("")), time * 1000)));
+    };
