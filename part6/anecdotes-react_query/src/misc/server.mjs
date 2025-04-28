@@ -22,3 +22,19 @@ export async function createAnecdote(content) {
 
   return res;
 }
+
+export async function voteAnecdote({ votes, id }) {
+  const res = await fetch(`${serverUrl}/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      votes: votes + 1,
+    }),
+  });
+
+  if (!res.ok) throw new Error("unable to create");
+
+  return res;
+}
