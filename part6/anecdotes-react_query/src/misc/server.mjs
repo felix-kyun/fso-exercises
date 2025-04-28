@@ -5,3 +5,20 @@ export async function getAnecdotes() {
   if (!res.ok) throw new Error("unable to fetch anecdotes");
   return await res.json();
 }
+
+export async function createAnecdote(content) {
+  const res = await fetch(serverUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      content,
+      votes: 0,
+    }),
+  });
+
+  if (!res.ok) throw new Error("unable to create");
+
+  return res;
+}
