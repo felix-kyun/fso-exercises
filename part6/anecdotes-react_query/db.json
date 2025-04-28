@@ -1,0 +1,254 @@
+{
+  "anecdotes": [
+    {
+      "content": "If it hurts, do it more often",
+      "id": "1",
+      "votes": 101
+    },
+    {
+      "content": "Adding manpower to a late software project makes it later!",
+      "id": "2",
+      "votes": 4
+    },
+    {
+      "content": "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
+      "id": "3",
+      "votes": 1
+    },
+    {
+      "content": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+      "id": "4",
+      "votes": 1
+    },
+    {
+      "content": "Premature optimization is the root of all evil.",
+      "id": "5",
+      "votes": 0
+    },
+    {
+      "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
+      "id": "6",
+      "votes": 4
+    },
+    {
+      "id": "4adb",
+      "content": "felix",
+      "votes": 2
+    },
+    {
+      "id": "10e7",
+      "content": "",
+      "votes": 1
+    },
+    {
+      "id": "ec32",
+      "content": "",
+      "votes": 1
+    },
+    {
+      "id": "566c",
+      "content": "",
+      "votes": 1
+    },
+    {
+      "id": "7798",
+      "content": "",
+      "votes": 1
+    },
+    {
+      "id": "a0a0",
+      "content": "",
+      "votes": 1
+    },
+    {
+      "id": "3043",
+      "content": "",
+      "votes": 1
+    },
+    {
+      "id": "5b21",
+      "content": "",
+      "votes": 1
+    },
+    {
+      "id": "8691",
+      "content": "asdfasdfadsf",
+      "votes": 1
+    },
+    {
+      "id": "daa7",
+      "content": "asdfadsfasdfasdfasd",
+      "votes": 1
+    },
+    {
+      "id": "20d1",
+      "content": "fasdf",
+      "votes": 0
+    },
+    {
+      "id": "fbbd",
+      "content": "asdfa",
+      "votes": 0
+    },
+    {
+      "id": "3708",
+      "content": "sdfa",
+      "votes": 0
+    },
+    {
+      "id": "6536",
+      "content": "sdfa",
+      "votes": 0
+    },
+    {
+      "id": "b096",
+      "content": "sdfa",
+      "votes": 0
+    },
+    {
+      "id": "c83d",
+      "content": "sdfa",
+      "votes": 0
+    },
+    {
+      "id": "eb76",
+      "content": "sdf",
+      "votes": 0
+    },
+    {
+      "id": "caa7",
+      "content": "asdf",
+      "votes": 0
+    },
+    {
+      "id": "0e01",
+      "content": "asdf",
+      "votes": 0
+    },
+    {
+      "id": "362b",
+      "content": "adf",
+      "votes": 0
+    },
+    {
+      "id": "5d82",
+      "content": "asd",
+      "votes": 0
+    },
+    {
+      "id": "1c0d",
+      "content": "fad",
+      "votes": 0
+    },
+    {
+      "id": "ab69",
+      "content": "fad",
+      "votes": 0
+    },
+    {
+      "id": "732f",
+      "content": "fad",
+      "votes": 0
+    },
+    {
+      "id": "8ab3",
+      "content": "fad",
+      "votes": 0
+    },
+    {
+      "id": "a89b",
+      "content": "fasd",
+      "votes": 0
+    },
+    {
+      "id": "5221",
+      "content": "fad",
+      "votes": 0
+    },
+    {
+      "id": "64e8",
+      "content": "fad",
+      "votes": 0
+    },
+    {
+      "id": "7783",
+      "content": "fa",
+      "votes": 0
+    },
+    {
+      "id": "c840",
+      "content": "dfa",
+      "votes": 0
+    },
+    {
+      "id": "cf2e",
+      "content": "sdfa",
+      "votes": 0
+    },
+    {
+      "id": "d5eb",
+      "content": "sdfa",
+      "votes": 0
+    },
+    {
+      "id": "948e",
+      "content": "sdfa",
+      "votes": 0
+    },
+    {
+      "id": "7419",
+      "content": "sdf",
+      "votes": 0
+    },
+    {
+      "id": "259d",
+      "content": "asdg",
+      "votes": 0
+    },
+    {
+      "id": "7269",
+      "content": "ag",
+      "votes": 0
+    },
+    {
+      "id": "a0b2",
+      "content": "afgasd",
+      "votes": 0
+    },
+    {
+      "id": "2197",
+      "content": "fadsf",
+      "votes": 0
+    },
+    {
+      "id": "7d4a",
+      "content": "asdf",
+      "votes": 0
+    },
+    {
+      "id": "e947",
+      "content": "a",
+      "votes": 0
+    },
+    {
+      "id": "8941",
+      "content": "asdfasdfasd",
+      "votes": 0
+    },
+    {
+      "id": "4114",
+      "content": "asdfasdfa",
+      "votes": 0
+    },
+    {
+      "id": "9db3",
+      "content": "",
+      "votes": 0
+    },
+    {
+      "id": "e111",
+      "content": "adfadsf",
+      "votes": 0
+    }
+  ]
+}
