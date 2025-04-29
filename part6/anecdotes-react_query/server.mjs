@@ -9,7 +9,7 @@ const validateRequest = (req, res, next) => {
 
   console.log(req.body);
 
-  if (request.method === "POST" && (!content || content.length < 5)) {
+  if (req.method === "POST" && (!content || content.length < 5)) {
     return res.status(400).json({
       error: "Content must be at least 5 characters long.",
     });

@@ -18,6 +18,9 @@ const AnecdoteForm = () => {
 
       notificationDispatcher(setNotification("anecdote created successfully"));
     },
+    onError: (err) => {
+      notificationDispatcher(setNotification(err.message));
+    },
   });
 
   const onCreate = (event) => {

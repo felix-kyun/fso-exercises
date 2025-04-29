@@ -18,9 +18,11 @@ export async function createAnecdote(content) {
     }),
   });
 
-  if (!res.ok) throw new Error("unable to create");
+  const body = await res.json();
 
-  return res;
+  if (!res.ok) throw new Error(body.error);
+
+  return body;
 }
 
 export async function voteAnecdote({ votes, id }) {
