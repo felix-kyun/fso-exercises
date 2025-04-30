@@ -5,9 +5,9 @@ import { useField } from "../hooks/useField";
 export const CreateNew = (props) => {
   const navigate = useNavigate();
 
-  const content = useField("text");
-  const author = useField("text");
-  const info = useField("text");
+  const [content, contentReset] = useField("text");
+  const [author, authorReset] = useField("text");
+  const [info, infoReset] = useField("text");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,6 +21,13 @@ export const CreateNew = (props) => {
     navigate("/", {
       replace: true,
     });
+  };
+
+  const reset = (ev) => {
+    ev.preventDefault();
+    contentReset();
+    authorReset();
+    infoReset();
   };
 
   return (
@@ -39,7 +46,8 @@ export const CreateNew = (props) => {
           url for more info
           <input {...info} />
         </div>
-        <button>create</button>
+        <button type="submit">create</button>
+        <button onClick={reset}>reset</button>
       </form>
     </div>
   );
