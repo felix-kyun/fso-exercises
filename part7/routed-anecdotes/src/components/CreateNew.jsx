@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 export const CreateNew = (props) => {
+  const navigate = useNavigate();
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
   const [info, setInfo] = useState("");
@@ -12,6 +14,10 @@ export const CreateNew = (props) => {
       author,
       info,
       votes: 0,
+    });
+
+    navigate("/", {
+      replace: true,
     });
   };
 
