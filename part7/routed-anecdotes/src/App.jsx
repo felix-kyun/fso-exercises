@@ -6,6 +6,7 @@ import { Footer } from "./components/Footer";
 import { CreateNew } from "./components/CreateNew";
 import { Route, Routes } from "react-router";
 import { useMatch } from "react-router";
+import { AnecdoteView } from "./components/AnecdoteView";
 
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
@@ -24,6 +25,10 @@ const App = () => {
       id: 2,
     },
   ]);
+  const match = useMatch("/anecdotes/:id");
+  const selectedNote = match
+    ? anecdotes.find(({ id }) => id === Number(match?.params.id))
+    : null;
 
   const [notification, setNotification] = useState("");
 
@@ -53,6 +58,10 @@ const App = () => {
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
         <Route path="/about" element={<About />} />
         <Route path="/create" element={<CreateNew addNew={addNew} />} />
+        <Route
+          path="/anecdotes/:id"
+          element={<AnecdoteView anecdote={selectedNote} />}
+        />
       </Routes>
       <Footer />
     </div>
