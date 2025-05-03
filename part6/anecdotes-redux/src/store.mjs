@@ -4,9 +4,9 @@ import notificationReducer from "./reducers/notificationSlice.mjs";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
-  reducer: {
-    filter: filterReducer,
-    anecdotes: anecdoteReducer,
-    notification: notificationReducer,
-  },
+	reducer: {
+		filter: filterReducer,
+		anecdotes: anecdoteReducer,
+		notification: notificationReducer,
+	},
 });
