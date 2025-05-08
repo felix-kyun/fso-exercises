@@ -1,6 +1,13 @@
-export function UserActions({ user, setUser }) {
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { removeUser } from "../reducers/user.reducer.mjs";
+
+export function UserActions() {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
   function logout() {
-    setUser(null);
+    dispatch(removeUser());
     localStorage.removeItem("user");
   }
 

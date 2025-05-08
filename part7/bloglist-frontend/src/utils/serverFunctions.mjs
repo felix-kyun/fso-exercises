@@ -14,8 +14,6 @@ export async function login(username, password) {
   if (!response.ok) {
     throw new Error(data.message || "Login failed");
   }
-
-  window.localStorage.setItem("user", JSON.stringify(data));
   return data;
 }
 

@@ -2,12 +2,16 @@ import { useState } from "react";
 import { login, signup } from "../utils/serverFunctions.mjs";
 import { InputBox } from "./InputBox";
 import { Notify } from "./Notify";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setUser } from "../reducers/user.reducer.mjs";
 
-export function Login({ setUser }) {
+export function Login() {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [notification, setNotification] = useState(null);
+  const dispatch = useDispatch();
 
   function reset() {
     setUsername("");
@@ -19,7 +23,8 @@ export function Login({ setUser }) {
     ev.preventDefault();
     try {
       const user = await login(username, password);
-      setUser(user);
+      localStorage.setItem("user", JSON.stringify(user));
+      dispatch(setUser(user));
     } catch (error) {
       reset();
       setNotification(error.message);

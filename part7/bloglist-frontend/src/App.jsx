@@ -6,9 +6,11 @@ import { UserActions } from "./components/UserActions";
 import { useDispatch } from "react-redux";
 import { setNotify } from "./reducers/notifyReducer.mjs";
 import { initializeBlog } from "./reducers/blogReducer.mjs";
+import { useSelector } from "react-redux";
+import { setUser } from "./reducers/user.reducer.mjs";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,10 +18,10 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (localStorage.getItem("user")) {
-      setUser(JSON.parse(localStorage.getItem("user")));
+    if (!user) {
+      dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
     }
-  }, []);
+  }, [dispatch, user]);
 
   useEffect(() => {
     dispatch(initializeBlog());
