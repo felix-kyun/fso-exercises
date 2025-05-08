@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getBlogs } from "../server/blog.mjs";
+import {
+  createBlogServer,
+  deleteBlogServer,
+  getBlogsServer,
+} from "../server/blog.mjs";
 
 const { reducer, actions } = createSlice({
   name: "blog",
@@ -11,6 +15,7 @@ const { reducer, actions } = createSlice({
 
     append(state, action) {
       state.push(action.payload);
+      console.log(state);
     },
 
     update(state, action) {
@@ -32,13 +37,28 @@ const { reducer, actions } = createSlice({
 
       return state.map((blog) => (blog.id === id ? updatedBlog : blog));
     },
+
+    remove(state, action) {
+      return state.filter((blog) => blog.id !== action.payload);
+    },
   },
 });
 
 export default reducer;
-export const { set, append, update, like } = actions;
+export const { set, append, update, like, remove } = actions;
 
-export const initializeBlog = () => async (dispatch, getState) => {
-  const blogs = await getBlogs();
+export const initializeBlog = () => async (dispatch) => {
+  const blogs = await getBlogsServer();
   dispatch(set(blogs));
+};
+
+export const createBlog = (user, blog) => async (dispatch) => {
+  const createdBlog = await createBlogServer(user, blog);
+  console.log(createdBlog);
+  dispatch(append(createdBlog));
+};
+
+export const deleteBlog = (user, id) => async (dispatch) => {
+  await deleteBlogServer(user, id);
+  dispatch(remove(id));
 };

@@ -1,27 +1,23 @@
 import { useEffect, useState } from "react";
-import {
-  createBlog,
-  getBlogs,
-  updateBlog,
-  deleteBlog as blogDelete,
-} from "../utils/serverFunctions.mjs";
+import { updateBlog } from "../utils/serverFunctions.mjs";
+import { createBlog, deleteBlog } from "../reducers/blogReducer.mjs";
 import { Blog } from "./Blog";
 import { BlogCreation } from "./BlogCreation";
 import { Notify } from "./Notify";
 import { Togglable } from "./Togglable";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export function BlogsList({ user }) {
-  // const [blogs, setBlogs] = useState([]);
   const blogs = useSelector((state) => state.blogs);
   const [notification, setNotification] = useState(null);
   const creationRef = useRef();
+  const dispatch = useDispatch();
 
   async function createNewBlog(blog) {
     try {
-      const createdBlog = await createBlog(user, blog);
-      setBlogs([...blogs, createdBlog]);
+      dispatch(createBlog(user, blog));
       creationRef.current.toggleVisibility();
     } catch (error) {
       setNotification(error.message);
@@ -44,14 +40,13 @@ export function BlogsList({ user }) {
     }
   }
 
-  async function deleteBlog({ id, title }) {
+  async function handleDelete({ id, title }) {
     try {
       const confirmation = window.confirm(
         `Do You really want to delete "${title} ?"`,
       );
       if (!confirmation) return;
-      await blogDelete(user, id);
-      setBlogs(blogs.filter((blog) => blog.id !== id));
+      dispatch(deleteBlog(user, id));
     } catch (error) {
       setNotification(error.message);
     }
@@ -73,7 +68,7 @@ export function BlogsList({ user }) {
             blog={blog}
             incrementLikes={incrementLikes}
             user={user}
-            deleteBlog={deleteBlog}
+            deleteBlog={handleDelete}
           />
         ))}
     </div>
