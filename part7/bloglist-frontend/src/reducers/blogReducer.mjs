@@ -3,6 +3,7 @@ import {
   createBlogServer,
   deleteBlogServer,
   getBlogsServer,
+  updateBlogServer,
 } from "../server/blog.mjs";
 
 const { reducer, actions } = createSlice({
@@ -31,11 +32,9 @@ const { reducer, actions } = createSlice({
     },
 
     like(state, action) {
-      const { id } = action.payload;
-      const updatedBlog = state.find((blog) => blog.id === id);
-      updatedBlog.likes += 1;
-
-      return state.map((blog) => (blog.id === id ? updatedBlog : blog));
+      return state.map((blog) =>
+        blog.id === action.payload.id ? action.payload : blog,
+      );
     },
 
     remove(state, action) {
@@ -61,4 +60,10 @@ export const createBlog = (user, blog) => async (dispatch) => {
 export const deleteBlog = (user, id) => async (dispatch) => {
   await deleteBlogServer(user, id);
   dispatch(remove(id));
+};
+
+export const likeBlog = (blog) => async (dispatch) => {
+  const updatedBlog = { ...blog, likes: blog.likes + 1 };
+  await updateBlogServer(updatedBlog);
+  dispatch(like(updatedBlog));
 };

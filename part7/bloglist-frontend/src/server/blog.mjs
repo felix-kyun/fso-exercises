@@ -38,3 +38,13 @@ export async function deleteBlogServer(user, id) {
     },
   });
 }
+
+export async function updateBlogServer(blog) {
+  const response = await fetch(`${serverUrl}/${blog.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(blog),
+  });
+}

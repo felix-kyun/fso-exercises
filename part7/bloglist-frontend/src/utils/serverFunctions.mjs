@@ -36,24 +36,3 @@ export async function signup(username, name, password) {
 
   return data;
 }
-
-export async function getBlogs() {
-  const response = await fetch(`${SERVER_URL}/api/blogs`);
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Fetching blogs failed");
-  }
-
-  return data;
-}
-
-export async function updateBlog(blog) {
-  const response = await fetch(`${SERVER_URL}/api/blogs/${blog.id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(blog),
-  });
-}

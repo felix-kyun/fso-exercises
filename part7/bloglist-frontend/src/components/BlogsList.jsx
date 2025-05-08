@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { updateBlog } from "../utils/serverFunctions.mjs";
-import { createBlog, deleteBlog } from "../reducers/blogReducer.mjs";
+import { createBlog, deleteBlog, likeBlog } from "../reducers/blogReducer.mjs";
 import { Blog } from "./Blog";
 import { BlogCreation } from "./BlogCreation";
 import { Notify } from "./Notify";
@@ -24,17 +23,9 @@ export function BlogsList({ user }) {
     }
   }
 
-  async function incrementLikes({ id, likes, author, title, url }) {
+  async function incrementLikes(blog) {
     try {
-      await updateBlog({ id, author, title, url, likes: likes + 1 });
-      const updatedBlogs = blogs.map((blog) => {
-        if (blog.id === id) {
-          return { ...blog, likes: blog.likes + 1 };
-        }
-
-        return blog;
-      });
-      setBlogs(updatedBlogs);
+      dispatch(likeBlog(blog));
     } catch (error) {
       setNotification(error.message);
     }
