@@ -10,23 +10,13 @@ import { BlogCreation } from "./BlogCreation";
 import { Notify } from "./Notify";
 import { Togglable } from "./Togglable";
 import { useRef } from "react";
+import { useSelector } from "react-redux";
 
 export function BlogsList({ user }) {
-  const [blogs, setBlogs] = useState([]);
+  // const [blogs, setBlogs] = useState([]);
+  const blogs = useSelector((state) => state.blogs);
   const [notification, setNotification] = useState(null);
   const creationRef = useRef();
-
-  useEffect(() => {
-    async function fetchBlogs() {
-      try {
-        setBlogs(await getBlogs());
-      } catch (error) {
-        setNotification("Error fetching blogs:" + error.message);
-      }
-    }
-
-    fetchBlogs();
-  }, []);
 
   async function createNewBlog(blog) {
     try {

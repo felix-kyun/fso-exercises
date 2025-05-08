@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { UserActions } from "./components/UserActions";
 import { useDispatch } from "react-redux";
 import { setNotify } from "./reducers/notifyReducer.mjs";
+import { initializeBlog } from "./reducers/blogReducer.mjs";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -19,6 +20,10 @@ function App() {
       setUser(JSON.parse(localStorage.getItem("user")));
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(initializeBlog());
+  }, [dispatch]);
 
   return (
     <div>
