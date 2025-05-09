@@ -1,11 +1,10 @@
-export function Notify({ notification, setNotification }) {
+import { useNotification } from "../providers/notification.provider";
+
+export function Notify() {
+  const notification = useNotification();
   if (!notification) {
     return null;
   }
-
-  setTimeout(() => {
-    setNotification(null);
-  }, 3000);
 
   return (
     <div>

@@ -10,10 +10,11 @@ import { BlogCreation } from "./BlogCreation";
 import { Notify } from "./Notify";
 import { Togglable } from "./Togglable";
 import { useRef } from "react";
+import { useSetNotification } from "../providers/notification.provider";
 
 export function BlogsList({ user }) {
   const [blogs, setBlogs] = useState([]);
-  const [notification, setNotification] = useState(null);
+  const setNotification = useSetNotification();
   const creationRef = useRef();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export function BlogsList({ user }) {
     }
 
     fetchBlogs();
-  }, []);
+  }, [setNotification]);
 
   async function createNewBlog(blog) {
     try {
@@ -68,7 +69,7 @@ export function BlogsList({ user }) {
   }
   return (
     <div>
-      <Notify notification={notification} setNotification={setNotification} />
+      <Notify />
       <Togglable buttonLabel="Create New Blog" ref={creationRef}>
         <h2>Create New Blog</h2>
         <BlogCreation createBlog={createNewBlog} />

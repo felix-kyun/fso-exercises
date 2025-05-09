@@ -2,12 +2,13 @@ import { useState } from "react";
 import { login, signup } from "../utils/serverFunctions.mjs";
 import { InputBox } from "./InputBox";
 import { Notify } from "./Notify";
+import { useSetNotification } from "../providers/notification.provider";
 
 export function Login({ setUser }) {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [notification, setNotification] = useState(null);
+  const setNotification = useSetNotification();
 
   function reset() {
     setUsername("");
@@ -40,7 +41,7 @@ export function Login({ setUser }) {
 
   return (
     <div>
-      <Notify notification={notification} setNotification={setNotification} />
+      <Notify />
       <h2>Log In</h2>
       <form>
         <InputBox
