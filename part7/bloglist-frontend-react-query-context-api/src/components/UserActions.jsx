@@ -1,7 +1,12 @@
-export function UserActions({ user, setUser }) {
+import { resetUserAction } from "../reducers/user.reducer.mjs";
+import { useUser } from "../contexts/user.context.mjs";
+
+export function UserActions() {
+  const [user, userDispatch] = useUser();
+
   function logout() {
-    setUser(null);
     localStorage.removeItem("user");
+    userDispatch(resetUserAction());
   }
 
   if (!user) {

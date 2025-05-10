@@ -12,11 +12,13 @@ import { Togglable } from "./Togglable";
 import { useRef } from "react";
 import { useSetNotification } from "../providers/notification.provider";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useUser } from "../contexts/user.context.mjs";
 
-export function BlogsList({ user }) {
+export function BlogsList() {
   const setNotification = useSetNotification();
   const creationRef = useRef();
   const queryClient = useQueryClient();
+  const [user] = useUser();
 
   const {
     data: blogs,
@@ -30,7 +32,7 @@ export function BlogsList({ user }) {
   // creation mutation
   const creationMutation = useMutation({
     mutationFn: createBlog,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["blogs"],
       });

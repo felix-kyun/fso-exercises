@@ -3,12 +3,15 @@ import { login, signup } from "../utils/serverFunctions.mjs";
 import { InputBox } from "./InputBox";
 import { Notify } from "./Notify";
 import { useSetNotification } from "../providers/notification.provider";
+import { useUser } from "../contexts/user.context.mjs";
+import { setUserAction } from "../reducers/user.reducer.mjs";
 
-export function Login({ setUser }) {
+export function Login() {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const setNotification = useSetNotification();
+  const [_, userDispatch] = useUser();
 
   function reset() {
     setUsername("");
@@ -20,7 +23,7 @@ export function Login({ setUser }) {
     ev.preventDefault();
     try {
       const user = await login(username, password);
-      setUser(user);
+      userDispatch(setUserAction(user));
     } catch (error) {
       reset();
       setNotification(error.message);
