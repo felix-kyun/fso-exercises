@@ -62,7 +62,7 @@ export function BlogsList({ user }) {
 
         return blog;
       });
-      setBlogs(updatedBlogs);
+      queryClient.setQueryData(["blogs"], updatedBlogs);
     } catch (error) {
       setNotification(error.message);
     }
@@ -75,7 +75,9 @@ export function BlogsList({ user }) {
       );
       if (!confirmation) return;
       await blogDelete(user, id);
-      setBlogs(blogs.filter((blog) => blog.id !== id));
+      queryClient.setQueryData(["blogs"], (oldBlogs) =>
+        oldBlogs.filter((blog) => blog.id !== id),
+      );
     } catch (error) {
       setNotification(error.message);
     }
