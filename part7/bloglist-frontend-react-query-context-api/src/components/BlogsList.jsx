@@ -11,28 +11,41 @@ import { Notify } from "./Notify";
 import { Togglable } from "./Togglable";
 import { useRef } from "react";
 import { useSetNotification } from "../providers/notification.provider";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function BlogsList({ user }) {
-  const [blogs, setBlogs] = useState([]);
   const setNotification = useSetNotification();
   const creationRef = useRef();
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    async function fetchBlogs() {
-      try {
-        setBlogs(await getBlogs());
-      } catch (error) {
-        setNotification("Error fetching blogs:" + error.message);
-      }
-    }
+  const {
+    data: blogs,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: getBlogs,
+  });
 
-    fetchBlogs();
-  }, [setNotification]);
+  // creation mutation
+  const creationMutation = useMutation({
+    mutationFn: createBlog,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["blogs"],
+      });
+      // or
+      // queryClient.setQueryData(["blogs"], (oldBlogs) => {
+      //   return [...oldBlogs, data];
+      // });
+    },
+  });
 
   async function createNewBlog(blog) {
     try {
-      const createdBlog = await createBlog(user, blog);
-      setBlogs([...blogs, createdBlog]);
+      // const createdBlog = await createBlog(user, blog);
+      // dispatch(appendBlogAction(createdBlog));
+      creationMutation.mutate({ user, blog });
       creationRef.current.toggleVisibility();
     } catch (error) {
       setNotification(error.message);
@@ -67,6 +80,9 @@ export function BlogsList({ user }) {
       setNotification(error.message);
     }
   }
+
+  if (isLoading) return <div>loading</div>;
+  if (isError) return <div>err</div>;
   return (
     <div>
       <Notify />

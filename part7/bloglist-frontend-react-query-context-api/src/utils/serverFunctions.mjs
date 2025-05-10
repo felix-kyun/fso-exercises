@@ -48,7 +48,7 @@ export async function getBlogs() {
   return data;
 }
 
-export async function createBlog(user, blog) {
+export async function createBlog({ user, blog }) {
   const response = await fetch(`${SERVER_URL}/api/blogs`, {
     method: "POST",
     headers: {
