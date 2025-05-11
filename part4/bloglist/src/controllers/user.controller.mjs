@@ -33,6 +33,12 @@ export async function getAllUsers(req, res) {
   return res.status(StatusCodes.OK).json(users);
 }
 
-/* export async function findUserById(req, res) {
+export async function getUser(req, res) {
   const { id } = req.params;
-} */
+  if (!id) throw new ServerError("Id is required", 400);
+
+  const user = await User.findById(id).populate("blogs");
+  if (!user) throw new ServerError("User not found", 404);
+
+  return res.status(StatusCodes.OK).json(user);
+}
