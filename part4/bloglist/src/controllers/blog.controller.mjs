@@ -1,7 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import { ServerError } from "../errors/server.error.mjs";
 import { Blog } from "../models/blog.model.mjs";
-import { User } from "../models/user.model.mjs";
 import { validateMongooseId } from "../utils/validateMongooseId.mjs";
 
 export async function getAllBlogs(req, res) {

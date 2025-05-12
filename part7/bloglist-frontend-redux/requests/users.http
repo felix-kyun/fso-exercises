@@ -1,8 +1,0 @@
-@server="http://localhost:3000/api" 
-
-###
-# @name get all users
-GET http://localhost:3000/api/blogs
-
-###
-GET {{server}}/blogs

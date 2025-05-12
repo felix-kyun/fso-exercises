@@ -1,0 +1,14 @@
+@server = "http://localhost:3000/api/blogs"
+
+###
+# @name = create a comment on a specific blog
+POST {{server}}/682244651c00d43f9d54a0b6/comments
+Content-Type: application/json
+
+{
+  "comment": "This is a comment on the blog post."
+}
+
+###
+# @name = get all the comments for a specific blog
+GET {{server}}/682244651c00d43f9d54a0b6/comments
