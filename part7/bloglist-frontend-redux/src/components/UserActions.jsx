@@ -16,9 +16,9 @@ export function UserActions() {
   }
 
   return (
-    <div>
+    <span>
       <em>{user.name}</em> &nbsp;
       <button onClick={logout}>Logout</button>
-    </div>
+    </span>
   );
 }

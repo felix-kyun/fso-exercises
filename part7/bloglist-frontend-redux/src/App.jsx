@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Login } from "./components/Login";
 import { BlogsList } from "./components/BlogsList";
 import { useEffect } from "react";
-import { UserActions } from "./components/UserActions";
 import { useDispatch } from "react-redux";
 import { setNotify } from "./reducers/notifyReducer.mjs";
 import { initializeBlog } from "./reducers/blogReducer.mjs";
@@ -11,7 +10,6 @@ import { setUser } from "./reducers/user.reducer.mjs";
 import { Routes } from "react-router";
 import { Route } from "react-router";
 import { UserList } from "./components/UserList";
-import { Link } from "react-router";
 import { QuickLinks } from "./components/QuickLinks";
 import { UserView } from "./components/UserView";
 import { BlogView } from "./components/BlogView";
@@ -36,9 +34,8 @@ function App() {
 
   return (
     <div>
-      <h1>Welcome to the Blog List</h1>
       <QuickLinks />
-      <UserActions user={user} setUser={setUser} />
+      <h2>Welcome to the Blog List</h2>
       <Routes>
         // home route
         <Route
