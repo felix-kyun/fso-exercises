@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { TogglableInline } from "./TogglableInline";
 
 export function Blog({ blog, incrementLikes, deleteBlog, user }) {
@@ -13,9 +14,10 @@ export function Blog({ blog, incrementLikes, deleteBlog, user }) {
       }}
     >
       <span>
-        {" "}
-        {blog.title} - {blog.author}
-      </span>{" "}
+        <Link to={`/blogs/${blog.id}`}>
+          {blog.title} - {blog.author}
+        </Link>
+      </span>
       &nbsp;
       <TogglableInline buttonLabel="View">
         <p> {blog.url}</p>

@@ -14,6 +14,7 @@ import { UserList } from "./components/UserList";
 import { Link } from "react-router";
 import { QuickLinks } from "./components/QuickLinks";
 import { UserView } from "./components/UserView";
+import { BlogView } from "./components/BlogView";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -49,6 +50,7 @@ function App() {
         // show all the users
         <Route path="/users" element={<UserList />} />
         <Route path="/users/:id" element={<UserView />} />
+        <Route path="/blogs/:id" element={<BlogView />} />
       </Routes>
     </div>
   );
