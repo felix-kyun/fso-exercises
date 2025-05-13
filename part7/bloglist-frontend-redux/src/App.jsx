@@ -13,6 +13,22 @@ import { UserList } from "./components/UserList";
 import { QuickLinks } from "./components/QuickLinks";
 import { UserView } from "./components/UserView";
 import { BlogView } from "./components/BlogView";
+import { Container } from "@mui/material";
+import { Box } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+    background: {
+      default: "#222222",
+    },
+    text: {
+      primary: "#ffffff",
+    },
+  },
+});
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -33,23 +49,26 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div>
-      <QuickLinks />
-      <h2>Welcome to the Blog List</h2>
-      <Routes>
-        // home route
-        <Route
-          path="/"
-          element={
-            user ? <BlogsList user={user} /> : <Login setUser={setUser} />
-          }
-        />
-        // show all the users
-        <Route path="/users" element={<UserList />} />
-        <Route path="/users/:id" element={<UserView />} />
-        <Route path="/blogs/:id" element={<BlogView />} />
-      </Routes>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Container>
+        <QuickLinks />
+        <h2>Welcome to the Blog List</h2>
+        <Routes>
+          // home route
+          <Route
+            path="/"
+            element={
+              user ? <BlogsList user={user} /> : <Login setUser={setUser} />
+            }
+          />
+          // show all the users
+          <Route path="/users" element={<UserList />} />
+          <Route path="/users/:id" element={<UserView />} />
+          <Route path="/blogs/:id" element={<BlogView />} />
+        </Routes>
+      </Container>
+    </ThemeProvider>
   );
 }
 

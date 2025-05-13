@@ -7,6 +7,9 @@ import { Togglable } from "./Togglable";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import List from "@mui/material/List";
+import { createTheme } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
 
 export function BlogsList({ user }) {
   const blogs = useSelector((state) => state.blogs);
@@ -42,6 +45,7 @@ export function BlogsList({ user }) {
       setNotification(error.message);
     }
   }
+
   return (
     <div>
       <Notify notification={notification} setNotification={setNotification} />
@@ -51,17 +55,19 @@ export function BlogsList({ user }) {
       </Togglable>
 
       <h2>Blogs</h2>
-      {blogs
-        .toSorted((a, b) => Number(b.likes) - Number(a.likes))
-        .map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            incrementLikes={incrementLikes}
-            user={user}
-            deleteBlog={handleDelete}
-          />
-        ))}
+      <List>
+        {blogs
+          .toSorted((a, b) => Number(b.likes) - Number(a.likes))
+          .map((blog) => (
+            <Blog
+              key={blog.id}
+              blog={blog}
+              incrementLikes={incrementLikes}
+              user={user}
+              deleteBlog={handleDelete}
+            />
+          ))}
+      </List>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { InputBox } from "./InputBox";
+import { Box, Button, TextField } from "@mui/material";
 
 export function BlogCreation({ createBlog }) {
   const [title, setTitle] = useState("");
@@ -23,18 +24,77 @@ export function BlogCreation({ createBlog }) {
   return (
     <div>
       <form>
-        <InputBox placeholder="Title" value={title} setValue={setTitle} />
-        <InputBox placeholder="Author" value={author} setValue={setAuthor} />
-        <InputBox placeholder="URL" value={url} setValue={setUrl} />
-        <InputBox
-          placeholder="Likes"
-          value={likes}
-          setValue={setLikes}
-          type="number"
-        />
-        <button type="submit" onClick={handleCreateBlog}>
-          Create
-        </button>
+        <Box
+          display="flex"
+          flexDirection="column"
+          maxWidth="33vw"
+          marginY="20px"
+        >
+          <TextField
+            id="outlined-basic"
+            label="Title"
+            variant="outlined"
+            margin="normal"
+            slotProps={{
+              htmlInput: {
+                value: title,
+                onChange: (ev) => {
+                  setTitle(ev.target.value);
+                },
+              },
+            }}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Author"
+            variant="outlined"
+            margin="normal"
+            slotProps={{
+              htmlInput: {
+                value: author,
+                onChange: (ev) => {
+                  setAuthor(ev.target.value);
+                },
+              },
+            }}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Url"
+            variant="outlined"
+            margin="normal"
+            slotProps={{
+              htmlInput: {
+                value: url,
+                onChange: (ev) => {
+                  setUrl(ev.target.value);
+                },
+              },
+            }}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Likes"
+            variant="outlined"
+            margin="normal"
+            slotProps={{
+              htmlInput: {
+                value: likes,
+                onChange: (ev) => {
+                  setLikes(ev.target.value);
+                },
+              },
+            }}
+          />
+          <Button
+            variant="outlined"
+            type="submit"
+            onClick={handleCreateBlog}
+            color="info"
+          >
+            Create
+          </Button>
+        </Box>
       </form>
     </div>
   );

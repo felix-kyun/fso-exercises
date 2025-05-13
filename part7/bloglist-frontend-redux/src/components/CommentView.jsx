@@ -1,3 +1,11 @@
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  TextField,
+} from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useMatch } from "react-router";
@@ -40,17 +48,37 @@ export const CommentView = () => {
   return (
     <div>
       <h3>Comments</h3>
-      <input
-        type="text"
-        value={input}
-        onChange={(ev) => setInput(ev.target.value)}
-      />
-      <button onClick={handleCreation}>Comment</button>
-      <ul>
+      <Box display="flex" paddingX="10px" marginY="20px">
+        <TextField
+          id="outlined-basic"
+          label="Comment"
+          variant="outlined"
+          sx={{ paddingX: "10px" }}
+          slotProps={{
+            htmlInput: {
+              value: input,
+              onChange: (ev) => {
+                setInput(ev.target.value);
+              },
+            },
+          }}
+        />
+        <Button
+          variant="outlined"
+          type="comment"
+          onClick={handleCreation}
+          color="info"
+        >
+          Create
+        </Button>
+      </Box>
+      <List>
         {comments.map(({ comment, id }) => (
-          <li key={id}>{comment}</li>
+          <ListItem key={id} disablePadding>
+            <ListItemText primary={comment} />
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </div>
   );
 };

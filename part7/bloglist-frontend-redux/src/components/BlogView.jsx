@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useMatch } from "react-router";
 import { likeBlog } from "../reducers/blogReducer.mjs";
 import { CommentView } from "./CommentView";
+import { Button } from "@mui/material";
 
 export const BlogView = () => {
   const blogs = useSelector((state) => state.blogs);
@@ -21,7 +22,15 @@ export const BlogView = () => {
         <a href={blog.url}>{blog.url}</a>
         <p>
           {blog.likes} likes
-          <button onClick={() => dispatch(likeBlog(blog))}>Like</button>
+          <Button
+            sx={{ marginLeft: 2 }}
+            variant="outlined"
+            type="comment"
+            onClick={() => dispatch(likeBlog(blog))}
+            color="info"
+          >
+            Like
+          </Button>
         </p>
         added by {blog.author}
       </div>
