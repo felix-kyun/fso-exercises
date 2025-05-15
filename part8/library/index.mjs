@@ -7,6 +7,7 @@ import { mergeTypeDefs } from "@graphql-tools/merge";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import { allBooks } from "./resolvers/allBooks.mjs";
+import { allAuthors } from "./resolvers/allAuthors.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const typeArray = loadFilesSync(path.join(__dirname, "./*.gql"));
@@ -17,6 +18,7 @@ const resolvers = {
     bookCount: () => books.length,
     authorCount: () => authors.length,
     allBooks,
+    allAuthors,
   },
 };
 
