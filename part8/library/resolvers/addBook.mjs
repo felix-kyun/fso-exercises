@@ -15,6 +15,7 @@ export function addBook(root, { title, author, published, genres }) {
   if (!authors.some((a) => a.name === author)) {
     authors.push({
       name: author,
+      id: uuid(),
     });
   }
 
