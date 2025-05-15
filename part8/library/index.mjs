@@ -8,6 +8,7 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import { allBooks } from "./resolvers/allBooks.mjs";
 import { allAuthors } from "./resolvers/allAuthors.mjs";
+import { addBook } from "./resolvers/addBook.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const typeArray = loadFilesSync(path.join(__dirname, "./*.gql"));
@@ -19,6 +20,9 @@ const resolvers = {
     authorCount: () => authors.length,
     allBooks,
     allAuthors,
+  },
+  Mutation: {
+    addBook,
   },
 };
 
