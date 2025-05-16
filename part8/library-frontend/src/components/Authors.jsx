@@ -1,5 +1,6 @@
 import allAuthors from "../queries/allAuthors.gql";
 import { useQuery } from "@apollo/client";
+import { AuthorEdit } from "./AuthorEdit";
 
 const Authors = () => {
   const { loading, error, data } = useQuery(allAuthors);
@@ -28,6 +29,7 @@ const Authors = () => {
           ))}
         </tbody>
       </table>
+      <AuthorEdit />
     </div>
   );
 };
