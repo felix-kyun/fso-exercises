@@ -1,0 +1,8 @@
+query allAuthors {
+  allAuthors {
+    id
+    name
+    born
+    bookCount
+  }
+}
