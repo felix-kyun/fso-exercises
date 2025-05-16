@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import editAuthor from "../mutations/editAuthor.gql";
 import allAuthors from "../queries/allAuthors.gql";
+import { useEffect } from "react";
 
 export const AuthorEdit = () => {
   const [author, setAuthor] = useState("");
+  const [authors, setAuthors] = useState([]);
   const [year, setYear] = useState("");
   const [editAuthorMutation] = useMutation(editAuthor, {
     onError: (error) => {
@@ -17,6 +19,17 @@ export const AuthorEdit = () => {
     ],
   });
 
+  const { data, error, loading } = useQuery(allAuthors, {
+    skip: !(authors.length == 0),
+  });
+
+  useEffect(() => {
+    if (data) {
+      setAuthors(data.allAuthors);
+      setAuthor(data.allAuthors[0].name);
+    }
+  }, [data]);
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -27,7 +40,6 @@ export const AuthorEdit = () => {
       },
     });
 
-    setAuthor("");
     setYear("");
   }
 
@@ -36,10 +48,16 @@ export const AuthorEdit = () => {
       <h2>Edit Author</h2>
       <form onSubmit={handleSubmit}>
         name:
-        <input
-          value={author}
+        <select
           onChange={({ target }) => setAuthor(target.value)}
-        />
+          value={author}
+        >
+          {authors.map((a) => (
+            <option key={a.id} value={a.name}>
+              {a.name}
+            </option>
+          ))}
+        </select>
         <br />
         born:
         <input
