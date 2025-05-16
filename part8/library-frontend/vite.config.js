@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import vitePluginGraphqlLoader from "vite-plugin-graphql-loader";
+import graphqlPlugin from "vite-plugin-graphql";
 
 export default defineConfig({
-  plugins: [react(), vitePluginGraphqlLoader()],
+  plugins: [react(), graphqlPlugin()],
 });

@@ -1,4 +1,4 @@
-query AllBooks {
+query allBooks {
   allBooks {
     title
     published

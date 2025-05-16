@@ -48,6 +48,9 @@ importers:
       vite:
         specifier: ^6.3.5
         version: 6.3.5
+      vite-plugin-graphql:
+        specifier: ^0.1.0
+        version: 0.1.0(graphql@16.11.0)(vite@6.3.5)
       vite-plugin-graphql-loader:
         specifier: ^4.0.4
         version: 4.0.4
@@ -1404,6 +1407,11 @@ packages:
 
   vite-plugin-graphql-loader@4.0.4:
     resolution: {integrity: sha512-lYnpQ2luV2fcuXmOJADljuktfMbDW00Y+6QS+Ek8Jz1Vdzlj/51LSGJwZqyjJ24a5YQ+o29Hr6el/5+nlZetvg==}
+
+  vite-plugin-graphql@0.1.0:
+    resolution: {integrity: sha512-e8517azfqF7R95gsfQ4WVOySIfmVdK61fJaH0DrH47vVXs+O2BOJF1mkoHV3X65GLDrmMCHp5H+cTmsVlv8kNA==}
+    peerDependencies:
+      vite: ^1.0.0-beta.11 || ^1.0.0
 
   vite@6.3.5:
     resolution: {integrity: sha512-cZn6NDFE7wdTpINgs++ZJ4N49W2vRp8LCKrn3Ob1kYNtOo21vfDoaV5GzBfLU4MovSAB8uNRm4jgzVQZ+mBzPQ==}
@@ -3008,6 +3016,13 @@ snapshots:
       graphql: 16.11.0
       graphql-tag: 2.12.6(graphql@16.11.0)
       magic-string: 0.30.17
+
+  vite-plugin-graphql@0.1.0(graphql@16.11.0)(vite@6.3.5):
+    dependencies:
+      graphql-tag: 2.12.6(graphql@16.11.0)
+      vite: 6.3.5
+    transitivePeerDependencies:
+      - graphql
 
   vite@6.3.5:
     dependencies:
