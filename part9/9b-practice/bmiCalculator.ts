@@ -1,0 +1,19 @@
+const bmi = (height: number, weight: number): number =>
+    weight / Math.pow(height, 2);
+
+const toMetre = (cm: number): number => cm / 100;
+
+const calculateBmi = (height: number, weight: number): string => {
+    const calculatedBmi = bmi(toMetre(height), weight);
+
+    if (calculatedBmi < 16.0) return "Underweright (Severe thinness)";
+    else if (calculatedBmi < 17.0) return "Underweright (Moderate thinness)";
+    else if (calculatedBmi < 18.5) return "Underweright (Mild thinness)";
+    else if (calculatedBmi < 25.0) return "Normal range";
+    else if (calculatedBmi < 30.0) return "Overweight (Pre-obese)";
+    else if (calculatedBmi < 35.0) return "Obese (Class I)";
+    else if (calculatedBmi < 40.0) return "Obese (Class II)";
+    else return "Obese (Class III)";
+};
+
+console.log(calculateBmi(173.5, 90.0));
