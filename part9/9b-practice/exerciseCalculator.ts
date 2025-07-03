@@ -1,3 +1,6 @@
+import { toNumber } from "./utils";
+import { argv, exit } from "process";
+
 interface ExerciseStats {
     periodLength: number;
     trainingDays: number;
@@ -30,4 +33,19 @@ const calculateExercises = (data: number[], target: number): ExerciseStats => {
     };
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+try {
+    if (argv.length < 4) {
+        console.error("two or more values required");
+        exit(1);
+    }
+
+    const [, , target, ...daily] = argv;
+    const parsedDaily = daily.map(toNumber);
+    const parsedTarget = toNumber(target);
+
+    console.log(calculateExercises(parsedDaily, parsedTarget));
+} catch (error: any) {
+    if (error instanceof Error) {
+        console.error(error.message);
+    }
+}

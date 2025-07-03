@@ -1,3 +1,6 @@
+import { toNumber } from "./utils";
+import { argv, exit } from "process";
+
 const bmi = (height: number, weight: number): number =>
     weight / Math.pow(height, 2);
 
@@ -16,4 +19,17 @@ const calculateBmi = (height: number, weight: number): string => {
     else return "Obese (Class III)";
 };
 
-console.log(calculateBmi(173.5, 90.0));
+try {
+    if (argv.length != 4) {
+        console.error("it only accepts two values as input");
+        exit(1);
+    }
+
+    const height = toNumber(argv[2]);
+    const weight = toNumber(argv[3]);
+    console.log(calculateBmi(height, weight));
+} catch (error: any) {
+    if (error instanceof Error) {
+        console.error(error.message);
+    }
+}
