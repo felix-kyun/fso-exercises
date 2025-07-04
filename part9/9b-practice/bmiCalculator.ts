@@ -6,7 +6,7 @@ const bmi = (height: number, weight: number): number =>
 
 const toMetre = (cm: number): number => cm / 100;
 
-const calculateBmi = (height: number, weight: number): string => {
+export const calculateBmi = (height: number, weight: number): string => {
     const calculatedBmi = bmi(toMetre(height), weight);
 
     if (calculatedBmi < 16.0) return "Underweright (Severe thinness)";
@@ -19,17 +19,18 @@ const calculateBmi = (height: number, weight: number): string => {
     else return "Obese (Class III)";
 };
 
-try {
-    if (argv.length != 4) {
-        console.error("it only accepts two values as input");
-        exit(1);
-    }
+if (require.main === module)
+    try {
+        if (argv.length != 4) {
+            console.error("it only accepts two values as input");
+            exit(1);
+        }
 
-    const height = toNumber(argv[2]);
-    const weight = toNumber(argv[3]);
-    console.log(calculateBmi(height, weight));
-} catch (error: any) {
-    if (error instanceof Error) {
-        console.error(error.message);
+        const height = toNumber(argv[2]);
+        const weight = toNumber(argv[3]);
+        console.log(calculateBmi(height, weight));
+    } catch (error: any) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
     }
-}
