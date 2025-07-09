@@ -1,7 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const diagnosis_json_1 = __importDefault(require("../data/diagnosis.json"));
-const getDiagnoses = () => diagnosis_json_1.default;
+exports.getDiagnosesData = void 0;
+const diagnoses_1 = require("../data/diagnoses");
+const getDiagnosesData = () => {
+    return diagnoses_1.diagnosis;
+};
+exports.getDiagnosesData = getDiagnosesData;
