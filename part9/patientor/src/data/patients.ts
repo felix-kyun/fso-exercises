@@ -1,6 +1,15 @@
 import { Patient } from "../types/patient";
+import { parsePatient } from "../utils/parsePatient";
 
-export const patients: Patient[] = [
+type RawPatient =
+    | "id"
+    | "name"
+    | "dateOfBirth"
+    | "ssn"
+    | "gender"
+    | "occupation";
+
+const rawPatients: Array<Record<RawPatient, string>> = [
     {
         id: "d2773336-f723-11e9-8f0b-362b9e155667",
         name: "John McClane",
@@ -42,3 +51,11 @@ export const patients: Patient[] = [
         occupation: "Digital evangelist",
     },
 ];
+
+export const patients: Patient[] = rawPatients.map((patient) => {
+    const tmpPatient = parsePatient(patient);
+    return {
+        ...tmpPatient,
+        id: patient.id,
+    };
+});
