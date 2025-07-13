@@ -24,6 +24,7 @@ export const createPatient = (
             parsePatient(req.body)
         );
         const { ssn: _ssn, ...nonSensitivePatient } = newPatient;
+        void _ssn; // idk why tsc complains about this var even after being prefixed wit h underscore, suprress the warning to keep my blood pressure down
 
         res.status(201).json(nonSensitivePatient);
     } catch (error: unknown) {
