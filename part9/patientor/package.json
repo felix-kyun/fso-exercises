@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "tsc": "tsc",
-        "dev": "ts-node-dev src/index.ts",
+        "dev": "ts-node-dev --poll src/index.ts",
         "lint": "eslint .",
         "start": "tsc && node build/index.js"
     },
@@ -29,6 +29,7 @@
     "dependencies": {
         "cors": "^2.8.5",
         "express": "^5.1.0",
-        "uuid": "^11.1.0"
+        "uuid": "^11.1.0",
+        "zod": "^4.0.5"
     }
 }
