@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { patients } from "../data/patients";
-import { NonSensitivePatient, Patient } from "../types/patient";
-import { parsePatient } from "../utils/parsePatient";
+import { NewPatient, NonSensitivePatient, Patient } from "../types/patient";
 import ServerError from "../errors/serverError.error";
 import { createPatientService } from "../services/patient.service";
 
@@ -16,21 +15,17 @@ export const getAllPatients = (
 };
 
 export const createPatient = (
-    req: Request,
+    req: Request<unknown, unknown, NewPatient>,
     res: Response<NonSensitivePatient>
 ): void => {
     try {
-        const newPatient: Patient = createPatientService(
-            parsePatient(req.body)
-        );
+        const newPatient: Patient = createPatientService(req.body);
         const { ssn: _ssn, ...nonSensitivePatient } = newPatient;
         void _ssn; // idk why tsc complains about this var even after being prefixed wit h underscore, suprress the warning to keep my blood pressure down
 
         res.status(201).json(nonSensitivePatient);
     } catch (error: unknown) {
         if (error instanceof Error) {
-            throw new ServerError("Invalid patient data", 400);
-        } else {
             throw new ServerError("An unexpected error occurred", 500);
         }
     }
